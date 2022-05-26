@@ -2,7 +2,7 @@
 
 import pickle
 import numpy as np
-from flask import Flask, request
+from flask import Flask, request, render_template
 
 model = None
 app = Flask(__name__)
@@ -17,7 +17,7 @@ def load_model():
 
 @app.route('/')
 def home_endpoint():
-    return 'Hello World!'
+    return render_template('index.html')
 
 
 @app.route('/predict', methods=['POST'])
