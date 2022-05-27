@@ -3,9 +3,24 @@
 import pickle
 import numpy as np
 from flask import Flask, request, render_template
+import pandas as pd
+
 
 model = None
+df = None
 app = Flask(__name__)
+
+
+def select(df, attributes, ranges):
+    assert isinstance(df, pd.DataFrame)
+    assert isinstance(attributes, list)
+    assert isinstance(ranges, list)
+    assert isinstance(ranges[0], list)
+
+    selected_df = df.copy(deep=True)
+    for i, attribute in enumerate(attributes):
+        selected_df = selected_df[selected_df[attribute].isin(ranges[i])]
+    return selected_df
 
 
 def load_model():
@@ -15,9 +30,23 @@ def load_model():
         model = pickle.load(f)
 
 
+def get_pd_df():
+    return pd.read_csv('./data/data_to_show.csv')
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    pass
+
+
 @app.route('/')
 def home_endpoint():
-    return render_template('index.html')
+    global df
+    df = get_pd_df()
+    neighbourhood_group_set = set(df['neighbourhood_group'])
+    neighbourhood_set = set(df['neighbourhood'])
+
+    return render_template('index.html', tables=[df.head().to_html(classes='data', header='true')])
 
 
 @app.route('/predict', methods=['POST'])

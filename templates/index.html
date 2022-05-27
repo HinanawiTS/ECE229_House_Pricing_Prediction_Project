@@ -109,7 +109,7 @@
 				<div class="tabbable" id="tabs-290381">
 					<ul class="nav nav-tabs">
 						<li class="nav-item">
-							<a class="nav-link" href="#tab1" data-toggle="tab">Map</a>
+							<a class="nav-link active" href="#tab1" data-toggle="tab">Map</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="#tab2" data-toggle="tab">Available Houses</a>
@@ -126,7 +126,9 @@
 						</div>
 						<div class="tab-pane" id="tab2">
 							<p>
-								Available Houses
+								{% for table in tables %}
+									{{ table|safe }}
+								{% endfor %}
 							</p>
 						</div>
 						<div class="tab-pane" id="tab3">
