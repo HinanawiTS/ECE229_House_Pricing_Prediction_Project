@@ -101,26 +101,38 @@ def home_endpoint():
 
 
 @app.route('/')
-def plot_bokeh_smalldf(dataframe):
-    df=dataframe
+def plot_bokeh_smalldf():
+    ###ADDED####
+    dataframe = pd.read_csv('final_dataframe.csv', index_col=0)
+    room_list = ['bedroom', 'bedrooms', 'bed', 'beds', 'bdrs', 'bdr', 'room', 'rooms']
+
+    def sort_keys(ls, df):
+        all_room_df = df[df.title_split.str.contains('|'.join(ls))]
+        return all_room_df
+
+    df = sort_keys(room_list, dataframe)
+    ###ADDED####
+
     chosentile = get_provider(Vendors.OSM)
-    palette = Category20c[10] #PRGn[11]
+    palette = Category20c[10]  # PRGn[11]
     source = ColumnDataSource(data=df)
     # Define color mapper - which column will define the colour of the data points
-    color_mapper = linear_cmap(field_name = 'price', palette = palette, low = df['price'].min(), high = df['price'].max())
+    color_mapper = linear_cmap(field_name='price', palette=palette, low=df['price'].min(), high=df['price'].max())
 
     # Set tooltips - these appear when we hover over a data point in our map, very nifty and very useful
-    tooltips = [("Price","@price"), ("Region","@neighbourhood"), ("Keywords","@title_split"), ("Number of Reviews", "@number_of_reviews")]
+    tooltips = [("Price", "@price"), ("Region", "@neighbourhood"), ("Keywords", "@title_split"),
+                ("Number of Reviews", "@number_of_reviews")]
     # Create figure
-    p = figure(title = 'Airbnb price by region in NYC', x_axis_type="mercator", y_axis_type="mercator", x_axis_label = 'Longitude', y_axis_label = 'Latitude', tooltips = tooltips)
+    p = figure(title='Airbnb price by region in NYC', x_axis_type="mercator", y_axis_type="mercator",
+               x_axis_label='Longitude', y_axis_label='Latitude', tooltips=tooltips)
     # Add map tile
     p.add_tile(chosentile)
     # Add points using mercator coordinates
-    p.circle(x = 'mercator_x', y = 'mercator_y', color = color_mapper, source=source, size=3, fill_alpha = 0.9)
-    #Defines color bar
+    p.circle(x='mercator_x', y='mercator_y', color=color_mapper, source=source, size=3, fill_alpha=0.9)
+    # Defines color bar
     color_bar = ColorBar(color_mapper=color_mapper['transform'],
-                         formatter = NumeralTickFormatter(format='0.0[0000]'),
-                         label_standoff = 13, width=8, location=(0,0))
+                         formatter=NumeralTickFormatter(format='0.0[0000]'),
+                         label_standoff=13, width=8, location=(0, 0))
     p.add_layout(color_bar, 'right')
 #     output_notebook()
 #     show(p)
