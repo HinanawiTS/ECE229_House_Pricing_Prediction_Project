@@ -110,7 +110,7 @@ def home_endpoint():
 @app.route('/')
 def plot_bokeh_smalldf():
     ###ADDED####
-    dataframe = pd.read_csv('final_dataframe.csv', index_col=0)
+    dataframe = pd.read_csv('./data/final_dataframe.csv', index_col=0)
     room_list = ['bedroom', 'bedrooms', 'bed', 'beds', 'bdrs', 'bdr', 'room', 'rooms']
 
     def sort_keys(ls, df):
@@ -147,7 +147,7 @@ def plot_bokeh_smalldf():
     script1, div1= components(p)
     cdn_js=CDN.js_files[0]
     cdn_css=CDN.css_files[0]
-    return render_template("index.html", script1=script1,div1=div1)
+    return render_template("index.html", script1=script1,div1=div1,cdn_css=cdn_css,cdn_js=cdn_js)
 
 
 # @app.route('/predict', methods=['POST'])
