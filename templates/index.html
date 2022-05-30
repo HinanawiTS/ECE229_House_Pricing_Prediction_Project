@@ -28,7 +28,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-3">
-				<form role="form">
+				<form role="form" method="post">
 					<button type="submit" class="btn btn-primary">
 						Search
 					</button>
@@ -38,46 +38,62 @@
 
 					<div class="checkbox"> 
 						Room Type <br>
-						<label>
-							<input type="checkbox"> R1 <br>
-							<input type="checkbox"> R2 <br>
-							<input type="checkbox"> R3 <br>
-						</label>
+
+						{% for roomType in roomTypeSet %}
+							<input type="checkbox" name="roomType" value="{{ roomType }}"> {{ roomType }} <br>
+						{% endfor %}
+
+						<br>
 					</div>
 
 					<div class="checkbox"> 
-						Neighbourhood <br>
-						<label>
+						Neighbourhood Group <br>
+
+						{% for neighbourhoodGroup in neighbourhoodGroupSet %}
+							<input type="checkbox" name="neighbourhoodGroup" value="{{ neighbourhoodGroup }}"> 
+								{{ neighbourhoodGroup }} <br>
+						{% endfor %}
+						<!-- <label>
 							<input type="checkbox"> N1 <br>
 							<input type="checkbox"> N2 <br>
 							<input type="checkbox"> N3 <br>
-						</label>
+						</label> -->
+						<br>
 					</div>
 
 					<div class="checkbox"> 
-						Neighbourhood <br>
+						Price Range <br>
+
 						<label>
-							<input type="checkbox"> N1 <br>
-							<input type="checkbox"> N2 <br>
-							<input type="checkbox"> N3 <br>
+							<input type="checkbox" name="priceRange" value="0-100"> &lt; 100 <br>
+							<input type="checkbox" name="priceRange" value="100-200"> 100-200 <br>
+							<input type="checkbox" name="priceRange" value="200-300"> 200-300 <br>
+							<input type="checkbox" name="priceRange" value="300-400"> 300-400 <br>
+							<input type="checkbox" name="priceRange" value="400-"> &gt; 400 <br>
 						</label>
+						<br>
 					</div>
+
+					<!-- <div class="checkbox"> 
+						Neighbourhood <br>
+
+						{% for neighbourhood in neighbourhoodSet %}
+							<input type="checkbox"> {{ neighbourhood }} <br>
+						{% endfor %}
+
+						<br>
+					</div> -->
 
 					<div class="form-group">
 						<label for="minNight">
 							Minimum Nights
 						</label>
-						<input class="form-control" id="minNight">
+						<input class="form-control" id="minNight" type="number" name="minNight">
 
 						<label for="numReview">
-							Number of Reviews
+							Mininum Reviews
 						</label>
-						<input class="form-control" id="numReview">
-
-						<label for="expectPrice">
-							Expected Price
-						</label>
-						<input class="form-control" id="expectPrice">
+						<input class="form-control" id="minReview" type="number" name="minReview">
 					</div>
 
 					<!-- <div class="form-group">
@@ -167,9 +183,9 @@
 	</div>
 	</div>
 
-	<script src="{{ url_for('static', filename='/js/jquery.min.js') }}"></script>
-	<script src="{{ url_for('static', filename='/js/bootstrap.min.js') }}"></script>
-	<script src="{{ url_for('static', filename='/js/scripts.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </body>
 
 </html>
