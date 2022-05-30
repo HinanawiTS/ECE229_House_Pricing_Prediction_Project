@@ -1,11 +1,8 @@
 # Serve model as a flask application
 
-from crypt import methods
 import pickle
-import numpy as np
 from flask import Flask, request, render_template
 import pandas as pd
-from sympy import true
 
 
 model = None
