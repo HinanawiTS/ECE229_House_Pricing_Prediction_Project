@@ -4,6 +4,13 @@ import pickle
 from flask import Flask, request, render_template
 import pandas as pd
 
+from bokeh.tile_providers import get_provider, Vendors
+from bokeh.palettes import Category20c
+from bokeh.transform import linear_cmap
+from bokeh.plotting import figure, ColumnDataSource
+from bokeh.models import ColorBar, NumeralTickFormatter
+from bokeh.embed import components
+from bokeh.resources import CDN
 
 model = None
 df = None
