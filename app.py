@@ -56,7 +56,7 @@ def parse_price_range(priceRangeStrList):
 def home_endpoint():
     global df
     df = get_pd_df()
-    df_selected = df.copy(deep=true)
+    df_selected = df.copy(deep=True)
     roomTypeSet = set(df['room_type'])
     neighbourhoodGroupSet = set(df['neighbourhood_group'])
     neighbourhoodSet = set(df['neighbourhood'])
@@ -99,6 +99,36 @@ def home_endpoint():
                            neighbourhoodGroupSet=neighbourhoodGroupSet,
                            neighbourhoodSet=neighbourhoodSet)
 
+
+@app.route('/')
+def plot_bokeh_smalldf(dataframe):
+    df=dataframe
+    chosentile = get_provider(Vendors.OSM)
+    palette = Category20c[10] #PRGn[11]
+    source = ColumnDataSource(data=df)
+    # Define color mapper - which column will define the colour of the data points
+    color_mapper = linear_cmap(field_name = 'price', palette = palette, low = df['price'].min(), high = df['price'].max())
+
+    # Set tooltips - these appear when we hover over a data point in our map, very nifty and very useful
+    tooltips = [("Price","@price"), ("Region","@neighbourhood"), ("Keywords","@title_split"), ("Number of Reviews", "@number_of_reviews")]
+    # Create figure
+    p = figure(title = 'Airbnb price by region in NYC', x_axis_type="mercator", y_axis_type="mercator", x_axis_label = 'Longitude', y_axis_label = 'Latitude', tooltips = tooltips)
+    # Add map tile
+    p.add_tile(chosentile)
+    # Add points using mercator coordinates
+    p.circle(x = 'mercator_x', y = 'mercator_y', color = color_mapper, source=source, size=3, fill_alpha = 0.9)
+    #Defines color bar
+    color_bar = ColorBar(color_mapper=color_mapper['transform'],
+                         formatter = NumeralTickFormatter(format='0.0[0000]'),
+                         label_standoff = 13, width=8, location=(0,0))
+    p.add_layout(color_bar, 'right')
+#     output_notebook()
+#     show(p)
+#     print(len(components(p)))
+    script1, div1= components(p)
+    cdn_js=CDN.js_files[0]
+    cdn_css=CDN.css_files[0]
+    return render_template("index.html", script1=script1,div1=div1)
 
 
 # @app.route('/predict', methods=['POST'])
