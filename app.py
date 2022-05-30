@@ -56,7 +56,7 @@ def parse_price_range(priceRangeStrList):
 def home_endpoint():
     global df
     df = get_pd_df()
-    df_selected = df.copy(deep=true)
+    df_selected = df.copy(deep=True)
     roomTypeSet = set(df['room_type'])
     neighbourhoodGroupSet = set(df['neighbourhood_group'])
     neighbourhoodSet = set(df['neighbourhood'])
