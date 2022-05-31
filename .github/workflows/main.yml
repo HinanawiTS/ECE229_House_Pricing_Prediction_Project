@@ -35,12 +35,12 @@ jobs:
         flags: 'g'
 
     - name: Deploy to EB
-      uses: einaregilsson/beanstalk-deploy@v14
+      uses: einaregilsson/beanstalk-deploy@v20
       with:
         aws_access_key: ${{ secrets.MY_AWS_ACCESS_KEY }}
         aws_secret_key: ${{ secrets.MY_AWS_SECRET_KEY }}
         application_name: New_York_Prices
         environment_name: Newyorkprices-env
-        version_label: "version-2"
+        version_label: "version-3"
         region: us-west-1
         deployment_package: deploy.zip
