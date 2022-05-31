@@ -12,6 +12,7 @@ copy ./model.pkl ./
 ADD ./data ./data
 COPY ./application.py ./
 ADD ./templates ./templates
+COPY ./predict.py ./
 
 
 EXPOSE 5000
