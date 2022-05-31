@@ -186,9 +186,8 @@ def home_endpoint():
     if request.method == 'POST':
         df_selected = select_from_request(request.form)
         if len(df_selected) == 0:
-            # encoded_input = data_transform(get_pd_df('./data/AB_NYC_2019.csv'), request.form)
-            # price_predicted = predict('model.pkl', encoded_input)
-            price_predicted = 10000
+            encoded_input = data_transform(get_pd_df('./data/AB_NYC_2019.csv'), request.form)
+            price_predicted = predict('model.pkl', encoded_input)
             msg_pred = "We have no available houses in our records that match the searching input, but we can provide predicted price accrodingly:"
             request_pd = parse_request(request.form).to_frame().T
             request_pd.insert(0, 'predicted_price', price_predicted)
