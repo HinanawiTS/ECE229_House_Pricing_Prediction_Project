@@ -12,10 +12,6 @@ copy ./model.pkl ./
 ADD ./data ./data
 COPY ./application.py ./
 ADD ./templates ./templates
-ADD ./pred ./pred
-ADD ./static ./static
-ADD ./viz ./viz
-ADD ./viz_FilterbyText ./viz_FilterbyText
 
 
 EXPOSE 5000
