@@ -112,16 +112,6 @@
 						<br>
 					</div>
 
-					<!-- <div class="checkbox"> 
-						Neighbourhood <br>
-
-						{% for neighbourhood in neighbourhoodSet %}
-							<input type="checkbox"> {{ neighbourhood }} <br>
-						{% endfor %}
-
-						<br>
-					</div> -->
-
 					<div class="form-group">
 						<label for="minNight">
 							Minimum Nights
@@ -163,19 +153,19 @@
 				<div class="tabbable" id="tabs-290381">
 					<ul class="nav nav-tabs">
 						<li class="nav-item">
-							<a class="nav-link active" href="#tab1" data-toggle="tab">Map</a>
+							<a class="nav-link active" href="#tab1" data-toggle="tab">Map of Houses</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#tab2" data-toggle="tab">Available Houses</a>
+							<a class="nav-link" href="#tab2" data-toggle="tab">Searching/Prediction Result</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#tab3" data-toggle="tab">Price Predict</a>
+							<a class="nav-link" href="#tab3" data-toggle="tab">Data Visualization</a>
 						</li>
 					</ul>
 					<div class="tab-content">
 						<div class="tab-pane active" id="#tab1">
 							<p>
-								<!--								<img alt="Bootstrap Image Preview" src="static/figure/temp_map.png" class="rounded">-->
+								<!-- <img alt="Bootstrap Image Preview" src="static/figure/temp_map.png" class="rounded">-->
 								{{script1 | safe}}
 								{{div1 | safe}}
 							</p>
@@ -189,7 +179,7 @@
 						</div>
 						<div class="tab-pane" id="tab3">
 							<p>
-								Price Predict
+								Data Visualization
 							</p>
 						</div>
 					</div>
