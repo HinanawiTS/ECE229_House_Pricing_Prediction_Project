@@ -8,7 +8,7 @@ RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 
-ADD ./model.pkl ./model.pkl
+copy ./model.pkl ./
 ADD ./data ./data
 COPY ./application.py ./
 ADD ./templates ./templates
