@@ -28,6 +28,6 @@ jobs:
         aws_secret_key: ${{ secrets.MY_AWS_SECRET_KEY }}
         application_name: New_York_Prices
         environment_name: Newyorkprices-env
-        version_label: "version-9"
+        version_label: "version-10"
         region: us-west-1
         deployment_package: deploy.zip
