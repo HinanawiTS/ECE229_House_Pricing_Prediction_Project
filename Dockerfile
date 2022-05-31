@@ -21,4 +21,4 @@ COPY ./data_preprocess.ipynb ./
 COPY ./model_fake.pkl ./
 
 EXPOSE 5000
-RUN python application.py
+CMD ["python", "application.py"]
