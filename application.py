@@ -3,7 +3,7 @@
 import pickle
 from flask import Flask, request, render_template
 import pandas as pd
-from predict import data_transform, predict
+from predict import data_transform, predict, parse_request
 
 from bokeh.tile_providers import get_provider, Vendors
 from bokeh.palettes import Category20c
@@ -50,6 +50,7 @@ def get_ng_dict(df):
         ng_dict[key] = list(val)
     return ng_dict
 
+
 def load_model():
     global model
     # model variable refers to the global variable
@@ -86,10 +87,25 @@ def select_from_request(result):
         attributes.append('neighbourhood_group')
         ranges.append(neighbourhoodGroupList)
 
-    priceRangeList = result.getlist('priceRange')
-    if priceRangeList != []:
+    # priceRangeList = result.getlist('priceRange')
+    # if priceRangeList != []:
+    #     attributes.append('price')
+    #     ranges.append(parse_price_range(priceRangeList))
+
+    priceRange = '-'
+    min_price = result.get('minPrice')
+    max_price = result.get('maxPrice')
+    if min_price or max_price:
+        if min_price:
+            priceRange = min_price + priceRange
+        else:
+            priceRange = '0' + priceRange
+        if max_price:
+            priceRange = priceRange + max_price
+
         attributes.append('price')
-        ranges.append(parse_price_range(priceRangeList))
+        ranges.append(parse_price_range([priceRange]))
+
 
     min_nights = result.get('minNight')
     if min_nights:
@@ -148,6 +164,10 @@ def plot_bokeh_map():
     return script1, div1, cdn_js
 
 
+def format_predict(predict, request_form):
+    pass
+
+
 @application.route('/', methods=['POST', 'GET'])
 def home_endpoint():
     global df
@@ -161,13 +181,18 @@ def home_endpoint():
 
     script1, div1, cdn_js = plot_bokeh_map()
 
+    msg_pred = None
     # select data according to the submitted form
     if request.method == 'POST':
         df_selected = select_from_request(request.form)
         if len(df_selected) == 0:
-            encoded_input = data_transform(get_pd_df('./data/AB_NYC_2019.csv'), request.form)
-            price_predicted = predict('model.pkl', encoded_input)
-            print(price_predicted)
+            # encoded_input = data_transform(get_pd_df('./data/AB_NYC_2019.csv'), request.form)
+            # price_predicted = predict('model.pkl', encoded_input)
+            price_predicted = 10000
+            msg_pred = "We have no available houses in our records that match the searching input, but we can provide predicted price accrodingly:"
+            request_pd = parse_request(request.form).to_frame().T
+            request_pd.insert(0, 'predicted_price', price_predicted)
+            df_selected = request_pd
 
 
     return render_template('index.html',
@@ -176,7 +201,7 @@ def home_endpoint():
                            roomTypeSet=roomTypeSet,
                            neighbourhoodGroupSet=neighbourhoodGroupSet,
                            neighbourhoodSet=neighbourhoodSet, ng_dict=ng_dict,
-                           script1=script1, div1=div1, cdn_js=cdn_js)
+                           script1=script1, div1=div1, cdn_js=cdn_js, msg_pred=msg_pred)
 
 
 # @application.route('/predict', methods=['POST'])

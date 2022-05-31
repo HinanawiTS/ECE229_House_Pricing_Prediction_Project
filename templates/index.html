@@ -32,7 +32,7 @@
 		<div class="background">
 			<h3>Background</h3>
             <p class="intro">
-				The housing rental market in New York City is gradually recovering after a rough time during the pandemic. Although the city has undergone several difficulties during the past two years, including rising property taxes, business shutdowns, etc, it’s still one of the most competitive property markets in the U.S. Moreover, with a large amount of effort we made in fighting against coronavirus, we are gradually recovering and moving towards our regular life.
+				The housing rental market in New York City is gradually recovering after a rough time during the pandemic. Although the city has undergone several difficulties during the past two years, including rising property taxes, business shutdowns, etc, it's still one of the most competitive property markets in the U.S. Moreover, with a large amount of effort we made in fighting against coronavirus, we are gradually recovering and moving towards our regular life.
 			With that being said, the economy in NYC revives: there is the reopening of restaurants, the growth of tourist industries, and the rapid rising of housing rentals. It is crucial for travelers, long-term tenants, and landlords to understand the housing rental trend in NYC and locate their desired rooms, either to stay for a few nights or to invest for future profits.
 			</p>
        	</div>
@@ -220,6 +220,10 @@
 						</div>
 						<div class="tab-pane" id="tab2">
 							<p>
+								{% if msg_pred %}
+									<div>{{msg_pred}}</div>
+								{% endif %}
+
 								{% for table in tables %}
 								{{ table|safe }}
 								{% endfor %}
