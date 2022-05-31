@@ -14,7 +14,7 @@ from bokeh.resources import CDN
 
 model = None
 df = None
-app = Flask(__name__)
+application = Flask(__name__)
 
 
 def select(df, attributes, ranges):
@@ -59,7 +59,7 @@ def parse_price_range(priceRangeStrList):
     return priceRangeList
 
 
-@app.route('/', methods=['POST', 'GET'])
+@application.route('/', methods=['POST', 'GET'])
 def home_endpoint():
     global df
     df = get_pd_df()
@@ -150,7 +150,7 @@ def home_endpoint():
                            neighbourhoodSet=neighbourhoodSet,
                            script1=script1, div1=div1, cdn_js=cdn_js)
 
-# @app.route('/')
+# @application.route('/')
 # def plot_bokeh_smalldf():
 #     ###ADDED####
 #     dataframe = pd.read_csv('./data/final_dataframe.csv', index_col=0)
@@ -193,7 +193,7 @@ def home_endpoint():
 #     return render_template("index.html", script1=script1,div1=div1,cdn_css=cdn_css,cdn_js=cdn_js)
 
 
-# @app.route('/predict', methods=['POST'])
+# @application.route('/predict', methods=['POST'])
 # def get_prediction():
 #     # Works only for a single sample
 #     if request.method == 'POST':
@@ -208,4 +208,4 @@ def home_endpoint():
 
 if __name__ == '__main__':
     load_model()  # load model at the beginning once only
-    app.run(host='0.0.0.0', port=5000)
+    application.run(host='0.0.0.0', port=5000)
