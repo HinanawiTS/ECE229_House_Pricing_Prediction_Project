@@ -11,36 +11,72 @@
 	<meta name="description" content="Source code generated using layoutit.com">
 	<meta name="author" content="LayoutIt!">
 
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
 	<!-- <link rel="stylesheet" href={{cdn_css}} type="text/css"> -->
 	<script type="text/javascript" src={{cdn_js}} crossorigin="anonymous"></script>
 
+	<link href="https://fonts.googleapis.com/css?family=Merriweather|Montserrat|Sacramento" rel="stylesheet">
+
 </head>
 
 <body>
-
+	<div class="top-container">
+      <div class="title-text">
+        <h1>New York Airbnb</h1>
+        <h2>find your dream home</h2>
+      </div>
+    </div>
+	<div class="middle-container" >
+		<div class="background">
+			<h3>Background</h3>
+            <p class="intro">
+				The housing rental market in New York City is gradually recovering after a rough time during the pandemic. Although the city has undergone several difficulties during the past two years, including rising property taxes, business shutdowns, etc, it’s still one of the most competitive property markets in the U.S. Moreover, with a large amount of effort we made in fighting against coronavirus, we are gradually recovering and moving towards our regular life.
+			With that being said, the economy in NYC revives: there is the reopening of restaurants, the growth of tourist industries, and the rapid rising of housing rentals. It is crucial for travelers, long-term tenants, and landlords to understand the housing rental trend in NYC and locate their desired rooms, either to stay for a few nights or to invest for future profits.
+			</p>
+       	</div>
+      	<hr>
+		<div class="Question-to-investigate">
+        	<h3>Question to investigate</h3>
+        	<p class="intro">
+				We would like to provide local hosts and renters with a personalized and interactive system that helps filter and choose certain properties while giving a reference price. This system will be deployed on AWS servers and will include sophisticated modules for data pipeline, analytical models, results, visualization, and interactive on-the-fly analysis.
+			</p>
+      	</div>
+		<hr>
+		<div class="User-Story">
+        	<h3> User Story</h3>
+        	<p class="intro">
+				As a travel/renter who wants to get the best housing offerings in the NYC Airbnb rental market, I would like to receive more information from multiple perspectives that could help me decide on the item with the highest return. To be more specific, I expect the system to perform several functions:
+			</p>
+			<p class="intro">
+				1. The system can automatically analyze the Airbnb data based on user input (i.e. expected neighborhood or price range), such that users can make informed decisions based on our analysis.
+			</p>
+			<p class="intro">
+				2. The system can automatically recommend the best rental prices based on user inputs and learned features of the NYC Airbnb market.
+			</p>
+      	</div>
+    </div>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
 				<h3>
-					I AM A TITLE <br>
+					Your Dream Room Finder <br>
 				</h3>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-3">
 				<form role="form" method="post">
-					<button type="submit" class="btn btn-primary">
+					<!--<button type="submit" class="btn btn-primary">
 						Search
 					</button>
 					<button type="reset" class="btn btn-primary">
 						Reset
-					</button>
+					</button>-->
 
 					<div class="checkbox">
-						Room Type <br>
+						<b>Room Type</b> <br>
 
 						{% for roomType in roomTypeSet %}
 						<input type="checkbox" name="roomType" value="{{ roomType }}"> {{ roomType }} <br>
@@ -50,7 +86,7 @@
 					</div>
 
 					<div class="checkbox" id="neighbourhoodGroup">
-						Neighbourhood Group <br>
+						<b>Neighbourhood Group </b><br>
 
 						{% for neighbourhoodGroup in neighbourhoodGroupSet %}
 						<input type="checkbox" name="neighbourhoodGroup" value="{{ neighbourhoodGroup }}"
@@ -78,6 +114,7 @@
 							}
 						</script>
 
+						<b>Neighbourhood </b><br>
 						<select id="neighbourhoodSelect" name="neighbourhood"> 
 							<option value="none" selected disabled hidden> Select a neighbourhood </option>
 						</select>
@@ -100,7 +137,7 @@
 						</script>
 					</div>
 
-					<div class="checkbox">
+					<!--<div class="checkbox">
 						<br> Price Range <br>
 
 						<label>
@@ -111,16 +148,26 @@
 							<input type="checkbox" name="priceRange" value="400-"> &gt; 400 <br>
 						</label>
 						<br>
-					</div>
+					</div>-->
 
 					<div class="form-group">
+						<label for="minPrice">
+							<b>Minimum Price</b>
+						</label>
+						<input class="form-control" id="minPrice" type="number" name="minPrice">
+
+						<label for="maxPrice">
+							<b>Maximum Price</b>
+						</label>
+						<input class="form-control" id="maxPrice" type="number" name="maxPrice">
+
 						<label for="minNight">
-							Minimum Nights
+							<b>Minimum Nights</b>b
 						</label>
 						<input class="form-control" id="minNight" type="number" name="minNight">
 
 						<label for="numReview">
-							Mininum Reviews
+							<b>Mininum Reviews</b>
 						</label>
 						<input class="form-control" id="minReview" type="number" name="minReview">
 					</div>
