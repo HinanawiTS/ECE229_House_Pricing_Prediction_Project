@@ -3,6 +3,7 @@
 import pickle
 from flask import Flask, request, render_template
 import pandas as pd
+from predict import data_transform, predict
 
 from bokeh.tile_providers import get_provider, Vendors
 from bokeh.palettes import Category20c
@@ -37,7 +38,7 @@ def select(df, attributes, ranges):
     return selected_df
 
 
-def select_ng_dict(df):
+def get_ng_dict(df):
     ng_dict = {}
     for _, row in df.iterrows():
         ng = row['neighbourhood_group']
@@ -56,8 +57,8 @@ def load_model():
         model = pickle.load(f)
 
 
-def get_pd_df():
-    return pd.read_csv('./data/data_to_show.csv')
+def get_pd_df(path):
+    return pd.read_csv(path)
 
 
 def parse_price_range(priceRangeStrList):
@@ -150,19 +151,24 @@ def plot_bokeh_map():
 @application.route('/', methods=['POST', 'GET'])
 def home_endpoint():
     global df
-    df = get_pd_df()
+    df = get_pd_df('./data/data_to_show.csv')
     df_selected = df.copy(deep=True)
     roomTypeSet = set(df['room_type'])
     neighbourhoodGroupSet = set(df['neighbourhood_group'])
     neighbourhoodSet = set(df['neighbourhood'])
 
-    ng_dict = select_ng_dict(df)
+    ng_dict = get_ng_dict(df)
 
     script1, div1, cdn_js = plot_bokeh_map()
 
     # select data according to the submitted form
     if request.method == 'POST':
         df_selected = select_from_request(request.form)
+        if len(df_selected) == 0:
+            encoded_input = data_transform(get_pd_df('./data/AB_NYC_2019.csv'), request.form)
+            price_predicted = predict('model.pkl', encoded_input)
+            print(price_predicted)
+
 
     return render_template('index.html',
                            tables=[df_selected.head().to_html(

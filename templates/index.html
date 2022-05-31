@@ -78,7 +78,7 @@
 							}
 						</script>
 
-						<select id="neighbourhoodSelect"> 
+						<select id="neighbourhoodSelect" name="neighbourhood"> 
 							<option value="none" selected disabled hidden> Select a neighbourhood </option>
 						</select>
 
@@ -89,6 +89,7 @@
 									if (op == 'add') {
 										var option = document.createElement("option");
 										option.text = ng;
+										option.name = ng;
 										option.value = ng;
 										select.add(option);
 									} else {
