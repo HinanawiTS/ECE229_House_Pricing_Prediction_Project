@@ -39,33 +39,68 @@
 						Reset
 					</button>
 
-					<div class="checkbox"> 
+					<div class="checkbox">
 						Room Type <br>
 
 						{% for roomType in roomTypeSet %}
-							<input type="checkbox" name="roomType" value="{{ roomType }}"> {{ roomType }} <br>
+						<input type="checkbox" name="roomType" value="{{ roomType }}"> {{ roomType }} <br>
 						{% endfor %}
 
 						<br>
 					</div>
 
-					<div class="checkbox"> 
+					<div class="checkbox" id="neighbourhoodGroup">
 						Neighbourhood Group <br>
 
 						{% for neighbourhoodGroup in neighbourhoodGroupSet %}
-							<input type="checkbox" name="neighbourhoodGroup" value="{{ neighbourhoodGroup }}"> 
-								{{ neighbourhoodGroup }} <br>
+						<input type="checkbox" name="neighbourhoodGroup" value="{{ neighbourhoodGroup }}"
+							onclick="onClickHander(this)">
+						{{ neighbourhoodGroup }} <br>
 						{% endfor %}
-						<!-- <label>
-							<input type="checkbox"> N1 <br>
-							<input type="checkbox"> N2 <br>
-							<input type="checkbox"> N3 <br>
-						</label> -->
 						<br>
 					</div>
 
-					<div class="checkbox"> 
-						Price Range <br>
+					<div class="dropdown">
+						<script>
+							var ngSelectedSet = new Set();
+							var ngMap = JSON.parse('{{ng_dict|tojson}}');
+
+							function onClickHander(obj) {
+								if (obj.checked) {
+									ngSelectedSet.add(obj.value);
+									// console.log(ngSelectedSet);
+									changeDropdown('add', obj.value);
+								} else {
+									ngSelectedSet.delete(obj.value);
+									// console.log(ngSelectedSet);
+									changeDropdown('remove', obj.value);
+								}
+							}
+						</script>
+
+						<select id="neighbourhoodSelect"> 
+							<option value="none" selected disabled hidden> Select a neighbourhood </option>
+						</select>
+
+						<script>
+							function changeDropdown(op, ng_group) {
+								var select = document.getElementById("neighbourhoodSelect");
+								for (var ng of ngMap[ng_group]) {
+									if (op == 'add') {
+										var option = document.createElement("option");
+										option.text = ng;
+										option.value = ng;
+										select.add(option);
+									} else {
+										select.removeChild(select.querySelector('option[value="' + ng + '"]'))
+									}
+								}
+							}
+						</script>
+					</div>
+
+					<div class="checkbox">
+						<br> Price Range <br>
 
 						<label>
 							<input type="checkbox" name="priceRange" value="0-100"> &lt; 100 <br>
@@ -114,7 +149,7 @@
 						</label>
 						<input type="password" class="form-control" id="exampleInputPassword1">
 					</div> -->
-					
+
 
 					<button type="submit" class="btn btn-primary">
 						Search
@@ -140,7 +175,7 @@
 					<div class="tab-content">
 						<div class="tab-pane active" id="#tab1">
 							<p>
-<!--								<img alt="Bootstrap Image Preview" src="static/figure/temp_map.png" class="rounded">-->
+								<!--								<img alt="Bootstrap Image Preview" src="static/figure/temp_map.png" class="rounded">-->
 								{{script1 | safe}}
 								{{div1 | safe}}
 							</p>
@@ -148,7 +183,7 @@
 						<div class="tab-pane" id="tab2">
 							<p>
 								{% for table in tables %}
-									{{ table|safe }}
+								{{ table|safe }}
 								{% endfor %}
 							</p>
 						</div>
