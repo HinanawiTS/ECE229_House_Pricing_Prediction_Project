@@ -231,7 +231,24 @@
 							{{script1_price | safe}}
 							{{div1_price | safe}}
 							<br>
+
+							Percentage of matching rooms
+							<br>
 							<img src="{{ img }}"> <!--class="vis-image"-->
+							<br>
+
+							<b> Analysis of Entire Dataset: </b>
+							<br>
+							Correlation Matrix:
+							<br>
+							<img src="{{ url_for('static', filename='figure/Correlation_Matrix.png') }}"/>
+							<br>
+							Feature Selection:
+							<br>
+							<img src="{{ url_for('static', filename='figure/Feature_Selection.png') }}"/>
+							<br>
+							Room Types:
+							<img src="{{ url_for('static', filename='figure/Room_Type.png') }}"/>
 						</div>
 					</div>
 				</div>
