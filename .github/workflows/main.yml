@@ -14,12 +14,25 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - 
-      name: Build the Docker image
+     
+    - name: Build the Docker image
       run: docker build -t ga63qes/prices -f Dockerfile .
-    -
-      name: Generate Deployment Package
-      run: zip -r deploy.zip . -x '*.git*'
+    
+    - name: Generate Deployment Package
+      run: zip -r deploy.zip *
+      
+    - name: Get timestamp
+      uses: gerred/actions/current-time@master
+      id: current-time
+        
+    - name: Run string replace
+      uses: frabert/replace-string-action@master
+      id: format-time
+      with:
+        pattern: '[:\.]+'
+        string: "${{ steps.current-time.outputs.time }}"
+        replace-with: '-'
+        flags: 'g'
 
     - name: Deploy to EB
       uses: einaregilsson/beanstalk-deploy@v20
