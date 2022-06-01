@@ -123,7 +123,7 @@ def visualize_count(filtered_dataset):
     title = title + "NYC"
 
     p = figure(title=title, match_aspect=False,
-               x_axis_type="mercator", y_axis_type="mercator")
+               x_axis_type="mercator", y_axis_type="mercator",plot_width=1050,plot_height=600)
 
     p.grid.visible = True
 
@@ -182,7 +182,7 @@ def visualize_count(filtered_dataset):
 def donut(dataset):
     fs = dataset.copy()
     # change figsize, must be two same numbers since it's square.
-    fig, ax = plt.subplots(figsize=(7, 7), subplot_kw=dict(aspect="equal"))
+    fig, ax = plt.subplots(figsize=(10, 7), subplot_kw=dict(aspect="equal"))
     column_name = fs.columns[0]
     recipe = (fs.groupby("room_type").count()[
               column_name] / len(fs)).reset_index()["room_type"]
@@ -266,7 +266,7 @@ def visualize_price(filtered_dataset):
     title = title + "NYC"
 
     p = figure(title=title, match_aspect=False,
-               x_axis_type="mercator", y_axis_type="mercator")
+               x_axis_type="mercator", y_axis_type="mercator",plot_width=1050,plot_height=600)
 
     p.grid.visible = True
 

@@ -62,7 +62,17 @@
 			</p>
       	</div>
     </div>
-
+	<div class = "middle-container">
+		<div class="Question-to-investigate">
+			<h3>Analysis of Entire Dataset</h3>
+        	<h4>General Room distribution in Ner York</h4>
+				<img alt="Room type NY" src="static/figure/Room_Type.png" class="datasetFigure">
+			<h4>Correlation Matrix</h4>
+				<img alt="Correlation" src="static/figure/Correlation_Matrix.png" class="datasetFigure">
+			<h4>Feature importance</h4>
+				<img alt="Feature importance" src="static/figure/Feature_Selection.png" class="datasetFigure">
+      	</div>
+	</div>
 	<div class="container-fluid" id="finder">
 		<div class="row">
 			<div class="col-md-12">
@@ -237,7 +247,7 @@
 							<img src="{{ img }}"> <!--class="vis-image"-->
 							<br>
 
-							<b> Analysis of Entire Dataset: </b>
+							<!--<b> Analysis of Entire Dataset: </b>
 							<br>
 							Correlation Matrix:
 							<br>
@@ -248,7 +258,7 @@
 							<img src="{{ url_for('static', filename='figure/Feature_Selection.png') }}"/>
 							<br>
 							Room Types:
-							<img src="{{ url_for('static', filename='figure/Room_Type.png') }}"/>
+							<img src="{{ url_for('static', filename='figure/Room_Type.png') }}"/>-->
 						</div>
 					</div>
 				</div>

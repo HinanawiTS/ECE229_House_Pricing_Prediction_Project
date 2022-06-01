@@ -116,19 +116,16 @@ a:hover {
   margin-top: 30px;
 }
 
+.datasetFigure{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  margin-top: 30px;
+}
+
 .btn{
    background-color:#66BFBF;
-}
-
-.col-md-3{
-}
-
-.tab-pane {
-  display: flex;
-}
-
-.half {
-  flex: 50%;
 }
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */

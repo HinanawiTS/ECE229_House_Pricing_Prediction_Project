@@ -37,7 +37,9 @@ def plot_bokeh_smalldf(dataframe):
                y_axis_type = "mercator", 
                x_axis_label = 'Longitude', 
                y_axis_label = 'Latitude', 
-               tooltips = tooltips)
+               tooltips = tooltips,
+               plot_width=1050,
+               plot_height=600)
     # Add map tile
     p.add_tile(chosentile)
     # Add points using mercator coordinates
@@ -121,7 +123,7 @@ def visualize_count(filtered_dataset):
     title = title + "NYC"
 
     p = figure(title = title, match_aspect = False, 
-               x_axis_type = "mercator", y_axis_type = "mercator")
+               x_axis_type = "mercator", y_axis_type = "mercator",plot_width=1050,plot_height=600)
 
     p.grid.visible = True
     
