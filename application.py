@@ -223,9 +223,12 @@ def home_endpoint():
     
     script1, div1, cdn_js = plot_bokeh_map_new(df_selected)
 
+    col_to_show = ['name', 'host_name', 'neighbourhood_group',
+                   'neighbourhood', 'room_type', 'price',
+                   'minimum_nights', 'number_of_reviews']
 
     return render_template('index.html', anchor=anchor, 
-                           tables=[df_selected.head().to_html(
+                           tables=[df_selected[col_to_show].head().to_html(
                                classes='data', header='true')],
                            roomTypeSet=roomTypeSet,
                            neighbourhoodGroupSet=neighbourhoodGroupSet,
