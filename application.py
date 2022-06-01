@@ -90,6 +90,14 @@ def select_from_request(result):
     if neighbourhoodGroupList != []:
         attributes.append('neighbourhood_group')
         ranges.append(neighbourhoodGroupList)
+        
+        
+        
+    
+    neighbourhoodList = result.getlist('neighbourhood')
+    if neighbourhoodList != []:
+        attributes.append('neighbourhood')
+        ranges.append(neighbourhoodList)
 
     # priceRangeList = result.getlist('priceRange')
     # if priceRangeList != []:
@@ -120,6 +128,7 @@ def select_from_request(result):
     if min_reviews:
         attributes.append('number_of_reviews')
         ranges.append(int(min_reviews))
+        
     return select(df, attributes, ranges)
 
 
@@ -236,7 +245,7 @@ def home_endpoint():
                            selected_RT=request.form.getlist('roomType'),
                            selected_NG=request.form.getlist('neighbourhoodGroup'),
                            selected_NEI=request.form.get('neighbourhood'),
-                           tables=[df_selected[col_to_show].drop_duplicates().head().to_html(
+                           tables=[df_selected[col_to_show].drop_duplicates().to_html(
                                classes='data', header='true')],
                            roomTypeSet=roomTypeSet,
                            neighbourhoodGroupSet=neighbourhoodGroupSet,
