@@ -23,13 +23,10 @@
 
 <body>
 	<script>
-		function jump(h){
-			var url = location.href;               //Save down the URL without hash.
-			location.href = "#"+h;                 //Go to the target element.
-			history.replaceState(null,null,url);   //Don't like hashes. Changing it back.
+		window.onload = function jump(){
+			var top = document.getElementById('{{anchor}}').offsetTop; //Getting Y of target element
+			window.scrollTo(0, top);                        //Go there.
 		}
-	
-		jump('{{ anchor }}');
 	</script>
 
 	<div class="top-container" id="top">
