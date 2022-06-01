@@ -35,7 +35,7 @@
 	<div class="top-container" id="top">
       <div class="title-text">
         <h1>New York Airbnb</h1>
-        <h2>find your dream home</h2>
+        <h2>find your dream house</h2>
       </div>
     </div>
 	<div class="middle-container" >
@@ -53,16 +53,15 @@
 				We would like to provide local hosts and renters with a personalized and interactive system that helps filter and choose certain properties while giving a reference price. This system will be deployed on AWS servers and will include sophisticated modules for data pipeline, analytical models, results, visualization, and interactive on-the-fly analysis.
 			</p>
       	</div>
-		<hr>
 		<div class="User-Story">
         	<h3> User Story</h3>
         	<p class="intro">
 				As a travel/renter who wants to get the best housing offerings in the NYC Airbnb rental market, I would like to receive more information from multiple perspectives that could help me decide on the item with the highest return. To be more specific, I expect the system to perform several functions:
 			</p>
-			<p class="intro">
+			<p class="userstory_body">
 				1. The system can automatically analyze the Airbnb data based on user input (i.e. expected neighborhood or price range), such that users can make informed decisions based on our analysis.
 			</p>
-			<p class="intro">
+			<p class="userstory_body">
 				2. The system can automatically recommend the best rental prices based on user inputs and learned features of the NYC Airbnb market.
 			</p>
       	</div>
@@ -71,7 +70,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<h3>
-					Your Dream Room Finder <br>
+					Your Dream House Finder <br>
 				</h3>
 			</div>
 		</div>
@@ -86,7 +85,7 @@
 					</button>-->
 
 					<div class="checkbox">
-						<b>Room Type</b> <br>
+						<b>Please Select your Room Type:</b> <br>
 
 						{% for roomType in roomTypeSet %}
 						<input type="checkbox" name="roomType" value="{{ roomType }}"> {{ roomType }} <br>
@@ -96,7 +95,7 @@
 					</div>
 
 					<div class="checkbox" id="neighbourhoodGroup">
-						<b>Neighbourhood Group </b><br>
+						<b>Please Select your Neighbourhood Group: </b><br>
 
 						{% for neighbourhoodGroup in neighbourhoodGroupSet %}
 						<input type="checkbox" name="neighbourhoodGroup" value="{{ neighbourhoodGroup }}"
@@ -124,9 +123,9 @@
 							}
 						</script>
 
-						<b>Neighbourhood </b><br>
+						<b>Please Select your desired Neighbourhood: </b><br>
 						<select id="neighbourhoodSelect" name="neighbourhood"> 
-							<option value="none" selected disabled hidden> Select a neighbourhood </option>
+							<option value="none" selected disabled hidden> Neighbourhood </option>
 						</select>
 
 						<script>
@@ -161,25 +160,29 @@
 					</div>-->
 
 					<div class="form-group">
+						
 						<label for="minPrice">
 							<b>Minimum Price</b>
 						</label>
-						<input class="form-control" id="minPrice" type="number" name="minPrice">
+						<input class="form-control" id="minPrice" type="number" name="minPrice",
+						 placeholder="10">
 
 						<label for="maxPrice">
 							<b>Maximum Price</b>
 						</label>
-						<input class="form-control" id="maxPrice" type="number" name="maxPrice">
+						<input class="form-control" id="maxPrice" type="number" name="maxPrice",
+						 placeholder="100">
 
 						<label for="minNight">
 							<b>Minimum Nights</b>
 						</label>
-						<input class="form-control" id="minNight" type="number" name="minNight">
+						<input class="form-control" id="minNight" type="number" name="minNight", 
+						placeholder="1">
 
 						<!-- <label for="numReview">
 							<b>Mininum Reviews</b>
 						</label>
-						<input class="form-control" id="minReview" type="number" name="minReview"> -->
+						<input class="form-control" id="minReview" type="number" name="minReview" placeholder="0"> -->
 					</div>
 
 					<!-- <div class="form-group">

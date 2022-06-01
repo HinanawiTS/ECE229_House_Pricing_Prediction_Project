@@ -1,3 +1,5 @@
+
+
 body {
   color: #40514E;
   margin: 0;
@@ -97,6 +99,50 @@ a:hover {
   margin-top: 50px;
 }
 
+.userstory_body {
+  width: 70%;
+  margin-top: 30px;
+}
+
 .btn{
    background-color:#66BFBF;
 }
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: red; /*?????????? */
+  opacity: 90; /* Firefox */
+  padding: 2px;
+  font-style: italic;
+  font-size: 1em;
+  text-align: center;
+}
+
+select{
+  line-height: 1;
+  border: 1px solid darkgray;
+  padding: 5px;
+  border-radius: 1;
+  width: 350px;
+  height: 30px;
+  position: relative;
+  font-size: 1em;
+  color:#40514E;
+}
+/* .min-max { 
+  width: 200px; float: left; margin: 0 23px 0 0;
+  display: block; margin: 0 0 3px; 
+  font-size: 1.0em; 
+  font-weight: bold; 
+  border: 1px solid #D0D0D0; 
+  padding: 5px;
+} */
+/* span { 
+  display: block; margin: 0 0 3px; 
+  font-size: 1.0em; 
+  font-weight: bold; 
+} */
+/* input { 
+  width: 200px; 
+  border: 1px solid #D0D0D0; 
+  padding: 5px;
+} */

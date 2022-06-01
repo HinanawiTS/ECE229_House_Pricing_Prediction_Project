@@ -12,6 +12,7 @@ from bokeh.plotting import figure, ColumnDataSource
 from bokeh.models import ColorBar, NumeralTickFormatter
 from bokeh.embed import components
 from bokeh.resources import CDN
+from bokeh.palettes import RdBu
 
 from viz_FilterbyText.pipeline_new_1 import viz_key_df
 
@@ -131,42 +132,59 @@ def plot_bokeh_map_new(df_new):
     return viz_key_df(room_list, fs)
 
 
-def plot_bokeh_map():
-    ###ADDED####
-    dataframe = pd.read_csv('./data/final_dataframe.csv', index_col=0)
-    room_list = ['bedroom', 'bedrooms', 'bed',
-                 'beds', 'bdrs', 'bdr', 'room', 'rooms']
+def plot_bokeh_map(): ###NEED TO ADD PASS-IN PARAM:pd.DataFrame (filtered df)!!!####
 
-    def sort_keys(ls, df):
+    ###ADDED#### 
+    #   IF above param is filled, then remove the ADDED SECTION
+    dataframe = pd.read_csv('./data/final_dataframe.csv', index_col=0)
+    ###ADDED####
+
+    room_list = ['bedroom', 'bedrooms', 'bed',
+                 'beds', 'bdrs', 'bdr', 'room', 'rooms',
+                 'apt','apartment','studio','loft','townhouse',
+                 'bath','baths']
+
+    def sort_keys(ls, df): 
         all_room_df = df[df.title_split.str.contains('|'.join(ls))]
         return all_room_df
 
     df = sort_keys(room_list, dataframe)
-    ###ADDED####
+
 
     chosentile = get_provider(Vendors.OSM)
-    palette = Category20c[10]  # PRGn[11]
+    palette = RdBu[7]
     source = ColumnDataSource(data=df)
     # Define color mapper - which column will define the colour of the data points
-    color_mapper = linear_cmap(
-        field_name='price', palette=palette, low=df['price'].min(), high=df['price'].max())
+    color_mapper = linear_cmap(field_name = 'price', palette = palette, low = df['price'].min(), high = df['price'].max())
 
     # Set tooltips - these appear when we hover over a data point in our map, very nifty and very useful
-    tooltips = [("Price", "@price"), ("Region", "@neighbourhood"), ("Keywords", "@title_split"),
-                ("Number of Reviews", "@number_of_reviews")]
+    tooltips = [("Price","@price"), ("Region","@neighbourhood"), ("Keywords","@title_split"), ("Number of Reviews", "@number_of_reviews")]
     # Create figure
-    p = figure(title='Airbnb price by region in NYC', x_axis_type="mercator", y_axis_type="mercator",
-               x_axis_label='Longitude', y_axis_label='Latitude', tooltips=tooltips)
+    p = figure(title = 'Airbnb Listings Selected', 
+               x_axis_type = "mercator", 
+               y_axis_type = "mercator", 
+               x_axis_label = 'Longitude', 
+               y_axis_label = 'Latitude', 
+               tooltips = tooltips,
+               plot_width=1350, plot_height=800)
     # Add map tile
     p.add_tile(chosentile)
     # Add points using mercator coordinates
-    p.circle(x='mercator_x', y='mercator_y', color=color_mapper,
-             source=source, size=3, fill_alpha=0.9)
-    # Defines color bar
-    color_bar = ColorBar(color_mapper=color_mapper['transform'],
-                         formatter=NumeralTickFormatter(format='0.0[0000]'),
-                         label_standoff=13, width=8, location=(0, 0))
+    sz = 2
+    if (len(df) < 70) or (df["neighbourhood"].nunique() == 1): 
+        sz = 12
+    p.circle(x = 'mercator_x', y = 'mercator_y', color = color_mapper, source = source, size = sz, fill_alpha = 0.9)
+    #Defines color bar
+    color_bar = ColorBar(color_mapper=color_mapper['transform'], 
+                         formatter = NumeralTickFormatter(format='0.0[0000]'), 
+                         label_standoff = 13, width=8, location=(0,0), title = "price")
+
     p.add_layout(color_bar, 'right')
+    p.xgrid.grid_line_color = None
+    p.ygrid.grid_line_color = None
+    p.axis.visible = False
+    p.title.align = "right"
+
     # output_notebook()
     # show(p)
     # print(len(components(p)))
