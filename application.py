@@ -254,13 +254,7 @@ def home_endpoint():
         
         else: 
             
-            msg_pred = str(len(df_selected)) + " records found based on given inputs, Average Price is: $" + str(round(df_selected["price"].mean(), 1)) + ", Median Price is: $" + str(round(df_selected["price"].median(), 1)) + ", displaying top 20 cheapest offerings: "
-            
-            
-            
-
-    
-    
+            msg_pred = str(len(df_selected)) + " records found based on given inputs, Average Price is: $" + str(round(df_selected["price"].mean(), 1)) + ", Median Price is: $" + str(round(df_selected["price"].median(), 1)) + ", displaying top 20 cheapest offerings: "  
     
     # if len(df_selected) == 0: 
     #     df = get_pd_df('./data/final_dataframe.csv')  # No result found, use the closest matches instead 
@@ -288,7 +282,11 @@ def home_endpoint():
                            selected_NEI = request.form.get('neighbourhood'),
                            
                            
-                           tables = [df_selected[col_to_show].rename({"name": "Title", "host_name": "Host", "neighbourhood_group": "Region", "neighbourhood": "Neighbourhood", "room_type": "Room Type", "minimum_nights": "Minimum Nights", "number_of_reviews": "Number of Reviews", "price": "Price Per Day"}, axis = 1).to_html(classes='data', header='true')],
+                           tables = [df_selected[col_to_show].rename({
+                               "name": "Title", "host_name": "Host", "neighbourhood_group": "Region", 
+                               "neighbourhood": "Neighbourhood", "room_type": "Room Type", 
+                               "minimum_nights": "Minimum Nights", "number_of_reviews": "Number of Reviews", 
+                               "price": "Price Per Day"}, axis = 1).to_html(classes='data', header='true')],
                            roomTypeSet = sorted(roomTypeSet),
                            neighbourhoodGroupSet = sorted(neighbourhoodGroupSet),
                            neighbourhoodSet = neighbourhoodSet, ng_dict = ng_dict,
@@ -296,19 +294,6 @@ def home_endpoint():
                            script1_count=script1_count, div1_count=div1_count, cdn_js_count=cdn_js_count,
                            script1_price=script1_price, div1_price=div1_price, cdn_js_price=cdn_js_price,
                            img=img)
-
-
-# @application.route('/predict', methods=['POST'])
-# def get_prediction():
-#     # Works only for a single sample
-#     if request.method == 'POST':
-#         data_json = request.get_json()  # Get data posted as a json
-#         data = data_json['data']
-#         # converts shape from (4,) to (1, 4)
-#         data = np.array(data)[np.newaxis, :]
-#         # runs globally loaded model on the data
-#         prediction = model.predict(data)
-#     return str(prediction[0])
 
 
 if __name__ == '__main__':
