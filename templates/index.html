@@ -62,11 +62,7 @@
 			</p>
       	</div>
     </div>
-	<div class="vis-container">
-		<h3>Dataset Visualization</h3>
-		<h4>Room types available in New York</h4>
-		<img src="{{ img }}" class="vis-image">
-	</div>
+
 	<div class="container-fluid" id="finder">
 		<div class="row">
 			<div class="col-md-12">
@@ -229,11 +225,13 @@
 							</p>
 						</div>
 						<div class="tab-pane" id="tab3">
-								 {{script1_count | safe}}
-								 {{div1_count | safe}}
-								  <br>
-								 {{script1_price | safe}}
-								 {{div1_price | safe}}
+							{{script1_count | safe}}
+							{{div1_count | safe}}
+							<br>
+							{{script1_price | safe}}
+							{{div1_price | safe}}
+							<br>
+							<img src="{{ img }}"> <!--class="vis-image"-->
 						</div>
 					</div>
 				</div>
