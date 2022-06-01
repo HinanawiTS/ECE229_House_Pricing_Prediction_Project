@@ -30,6 +30,8 @@ def select(df_selected, attributes, ranges):
 
     df_selected = df_selected.copy(deep=True)
     for i, attribute in enumerate(attributes):
+        #print(ranges[i])
+        #print(df_selected.head())
         if isinstance(ranges[i], list):
             # if isinstance(ranges[i][0], list):
             #     for r in ranges[i]:
@@ -195,6 +197,9 @@ def plot_bokeh_map(): ###NEED TO ADD PASS-IN PARAM:pd.DataFrame (filtered df)!!!
     p.axis.visible = False
     p.title.align = "right"
 
+    # output_notebook()
+    # show(p)
+    # print(len(components(p)))
     script1, div1 = components(p)
     cdn_js = CDN.js_files[0]
     # cdn_css = CDN.css_files[0]
@@ -228,6 +233,8 @@ def home_endpoint():
             encoded_input = data_transform(df, request.form)
             price_predicted = predict('model.pkl', encoded_input)
             
+            
+            #print(price_predicted)
             msg_pred = "We have no available record that match the searching input, but our model recommands a reasonable price based on the market trend" 
             msg_pred = msg_pred + " for the given inputs is: " + "$" + str(price_predicted) + ". " 
             # msg_pred = msg_pred + " \n And we can provide the closest matches in the region: "
@@ -240,14 +247,10 @@ def home_endpoint():
             msg_pred = "Less than 20 records found based on the inputs, which may not be representative of the market. Based on our model, a resonable price recommended for the given inputs is: " 
             msg_pred = msg_pred + "$" + str(price_predicted) + ". " 
             
-            msg_pred = msg_pred + " \n And the available listings found based on the inputs are: "
-        
-        
-        
+            msg_pred = msg_pred + " \n And the available listings found based on the inputs are: "   
         
         else: 
-            
-            msg_pred = str(len(df_selected)) + " records found based on given inputs, Average Price is: $" + str(round(df_selected["price"].mean(), 1)) + ", Median Price is: $" + str(round(df_selected["price"].median(), 1)) + ", displaying top 20 cheapest offerings: "  
+            msg_pred = str(len(df_selected)) + " records found based on given inputs, Average Price is: $" + str(round(df_selected["price"].mean(), 1)) + ", Median Price is: $" + str(round(df_selected["price"].median(), 1)) + ", displaying top 20 cheapest offerings: "       
     
     # if len(df_selected) == 0: 
     #     df = get_pd_df('./data/final_dataframe.csv')  # No result found, use the closest matches instead 
@@ -265,28 +268,36 @@ def home_endpoint():
     
     img = donut(df_selected)
 
-    #df_selected = df_selected.drop_duplicates().reset_index(drop=True)
     if len(df_selected) >= 20: 
         df_selected = df_selected.head(20)
-    #df_selected = pd.concat([df_selected.drop("price", axis = 1), df_selected["price"]], axis = 1)     
+
     return render_template('index.html', anchor=anchor, request_form=request.form,
                            selected_RT = request.form.getlist('roomType'),
                            selected_NG = request.form.getlist('neighbourhoodGroup'),
                            selected_NEI = request.form.get('neighbourhood'),
                            
                            
-                           tables = [df_selected[col_to_show].rename({
-                               "name": "Title", "host_name": "Host", "neighbourhood_group": "Region", 
-                               "neighbourhood": "Neighbourhood", "room_type": "Room Type", 
-                               "minimum_nights": "Minimum Nights", "number_of_reviews": "Number of Reviews", 
-                               "price": "Price Per Day"}, axis = 1).to_html(classes='data', header='true')],
+                           tables = [df_selected[col_to_show].rename({"name": "Title", "host_name": "Host", "neighbourhood_group": "Region", "neighbourhood": "Neighbourhood", "room_type": "Room Type", "minimum_nights": "Minimum Nights", "number_of_reviews": "Number of Reviews", "price": "Price Per Day"}, axis = 1).to_html(classes='data', header='true')],
                            roomTypeSet = sorted(roomTypeSet),
                            neighbourhoodGroupSet = sorted(neighbourhoodGroupSet),
                            neighbourhoodSet = neighbourhoodSet, ng_dict = ng_dict,
                            script1=script1, div1=div1, cdn_js=cdn_js, msg_pred=msg_pred,
                            script1_count=script1_count, div1_count=div1_count, cdn_js_count=cdn_js_count,
                            script1_price=script1_price, div1_price=div1_price, cdn_js_price=cdn_js_price,
-                           img=img)
+                           img = img)
+
+
+# @application.route('/predict', methods=['POST'])
+# def get_prediction():
+#     # Works only for a single sample
+#     if request.method == 'POST':
+#         data_json = request.get_json()  # Get data posted as a json
+#         data = data_json['data']
+#         # converts shape from (4,) to (1, 4)
+#         data = np.array(data)[np.newaxis, :]
+#         # runs globally loaded model on the data
+#         prediction = model.predict(data)
+#     return str(prediction[0])
 
 
 if __name__ == '__main__':
