@@ -221,7 +221,7 @@ def home_endpoint():
 
     
     ng_dict = get_ng_dict(df)
-    msg_pred = None
+    msg_pred = str(len(df_selected)) + "records found based on given inputs, Average Price is: $" + str(round(df_selected["price"].mean(), 1)) + ", Median Price is: $" + str(round(df_selected["price"].median(), 1)) + ", displaying top 20 cheapest offerings: "
     # select data according to the submitted form
     
     if request.method == 'POST':
