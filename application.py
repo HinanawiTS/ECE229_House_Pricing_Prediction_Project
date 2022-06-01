@@ -22,24 +22,26 @@ df = None
 application = Flask(__name__)
 
 
-def select(df, attributes, ranges):
-    assert isinstance(df, pd.DataFrame)
+def select(df_selected, attributes, ranges):
+    assert isinstance(df_selected, pd.DataFrame)
     assert isinstance(attributes, list)
     assert isinstance(ranges, list)
     # assert isinstance(ranges[0], list)
 
-    selected_df = df.copy(deep=True)
+    df_selected = df_selected.copy(deep=True)
     for i, attribute in enumerate(attributes):
+        print(ranges[i])
+        print(df_selected.head())
         if isinstance(ranges[i], list):
             # if isinstance(ranges[i][0], list):
             #     for r in ranges[i]:
             #         selected_df = selected_df[selected_df[attribute].isin(r)]
             # else:
-            selected_df = selected_df[selected_df[attribute].isin(ranges[i])]
+            df_selected = df_selected[df_selected[attribute].isin(ranges[i])]
         else:
-            selected_df = selected_df[selected_df[attribute] > ranges[i]]
+            df_selected = df_selected[df_selected[attribute] > ranges[i]]
 
-    return selected_df
+    return df_selected
 
 
 def get_ng_dict(df):
@@ -66,20 +68,18 @@ def get_pd_df(path):
     return pd.read_csv(path)
 
 
-def parse_price_range(priceRangeStrList):
-    print(priceRangeStrList)
-    priceRangeList = []
-    for priceRangeStr in priceRangeStrList:
-        loStr, hiStr = priceRangeStr.split('-')
-        if hiStr == '':
-            hiStr = '20000'
-        if loStr == '':
-            loStr = '0'
-        priceRangeList.append(list(range(int(loStr), int(hiStr))))
+def parse_price_range(priceRangeStr):
+    loStr, hiStr = priceRangeStr.split('-')
+    if hiStr == '':
+        hiStr = '20000'
+    if loStr == '':
+        loStr = '0'
+    priceRangeList = list(range(int(loStr), int(hiStr)))
     return priceRangeList
 
 
-def select_from_request(result, notfound = False):
+def select_from_request(df_selected, result, notfound = False):
+    global df
     attributes = []
     ranges = []
 
@@ -115,7 +115,7 @@ def select_from_request(result, notfound = False):
             priceRange = priceRange + max_price
 
         attributes.append('price')
-        ranges.append(parse_price_range([priceRange]))
+        ranges.append(parse_price_range(priceRange))
 
 
     min_nights = result.get('minNight')
@@ -128,7 +128,7 @@ def select_from_request(result, notfound = False):
         attributes.append('number_of_reviews')
         ranges.append(int(min_reviews))
         
-    return select(df, attributes, ranges)
+    return select(df_selected, attributes, ranges)
 
 
 def plot_bokeh_map_new(df_new):
@@ -213,7 +213,7 @@ def home_endpoint():
                    'minimum_nights', 'number_of_reviews', "price"]
     global df
     df = get_pd_df('./data/final_dataframe.csv')
-    df_selected = df.copy(deep = True).drop_duplicates(col_to_show).reset_index()
+    df_selected = df.copy(deep = True).drop_duplicates(col_to_show).reset_index(drop=True)
     roomTypeSet = set(sorted(set(df['room_type'])))
     neighbourhoodGroupSet = set(sorted(set(df['neighbourhood_group'])))
     neighbourhoodSet = set(sorted(set(df['neighbourhood'])))
@@ -227,7 +227,7 @@ def home_endpoint():
     
     if request.method == 'POST':
         anchor = "finder"
-        df_selected = select_from_request(request.form).drop_duplicates(col_to_show).reset_index()
+        df_selected = select_from_request(df_selected, request.form).drop_duplicates(col_to_show).reset_index(drop=True)
         
         if len(df_selected) == 0:
             encoded_input = data_transform(df, request.form)
@@ -237,9 +237,9 @@ def home_endpoint():
             #print(price_predicted)
             msg_pred = "We have no available record that match the searching input, but our model recommands a reasonable price based on the market trend" 
             msg_pred = msg_pred + " for the given inputs is: " + "$" + str(price_predicted) + ". " 
-            msg_pred = msg_pred + " \n And we can provide the closest matches in the region: "
-            request_pd = parse_request(df, request.form).to_frame().T
-            request_pd.insert(0, 'predicted_price', price_predicted)
+            # msg_pred = msg_pred + " \n And we can provide the closest matches in the region: "
+            # request_pd = parse_request(df, request.form).to_frame().T
+            # request_pd.insert(0, 'predicted_price', price_predicted)
             #df_selected = request_pd
         elif len(df_selected) < 20: 
             encoded_input = data_transform(df, request.form)
@@ -262,10 +262,10 @@ def home_endpoint():
     
     
     
-    if len(df_selected) == 0: 
-        df = get_pd_df('./data/final_dataframe.csv')  # No result found, use the closest matches instead 
-        df_selected = select_from_request(request.form, notfound = True).drop_duplicates(col_to_show).reset_index()
-             
+    # if len(df_selected) == 0: 
+    #     df = get_pd_df('./data/final_dataframe.csv')  # No result found, use the closest matches instead 
+    #     df_selected = select_from_request(df_selected, request.form, notfound = True).drop_duplicates(col_to_show).reset_index(drop=True)
+            
     for i in ng_dict.keys(): 
         ng_dict[i] = list(sorted(ng_dict[i]))
     
@@ -278,7 +278,7 @@ def home_endpoint():
     
     img = donut(df_selected)
 
-    #df_selected = df_selected.drop_duplicates().reset_index()
+    #df_selected = df_selected.drop_duplicates().reset_index(drop=True)
     if len(df_selected) >= 20: 
         df_selected = df_selected.head(20)
     #df_selected = pd.concat([df_selected.drop("price", axis = 1), df_selected["price"]], axis = 1)     
