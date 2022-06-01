@@ -134,7 +134,10 @@ def select_from_request(result, notfound = False):
 def plot_bokeh_map_new(df_new):
     # df_new=pd.read_csv('./data/final_dataframe.csv', index_col=0)
 
-    room_list = ['bedroom','bedrooms','bed','beds','bdrs','bdr','room','rooms']
+    room_list = ['bedroom', 'bedrooms', 'bed',
+                 'beds', 'bdrs', 'bdr', 'room', 'rooms',
+                 'apt','apartment','studio','loft','townhouse',
+                 'bath','baths']
     fs = df_new.copy()
     # fs = fs[fs["neighbourhood"].isin(["Kips Bay"])]
 
@@ -219,7 +222,7 @@ def home_endpoint():
 
     
     ng_dict = get_ng_dict(df)
-    msg_pred = str(len(df_selected)) + "records found based on given inputs, Average Price is: $" + str(round(df_selected["price"].mean(), 1)) + ", Median Price is: $" + str(round(df_selected["price"].median(), 1)) + ", displaying top 20 cheapest offerings: "
+    msg_pred = str(len(df_selected)) + " records found based on given inputs, Average Price is: $" + str(round(df_selected["price"].mean(), 1)) + ", Median Price is: $" + str(round(df_selected["price"].median(), 1)) + ", displaying top 20 cheapest offerings: "
     # select data according to the submitted form
     
     if request.method == 'POST':
@@ -251,7 +254,7 @@ def home_endpoint():
         
         else: 
             
-            msg_pred = str(len(df_selected)) + "records found based on given inputs, Average Price is: $" + str(round(df_selected["price"].mean(), 1)) + ", Median Price is: $" + str(round(df_selected["price"].median(), 1)) + ", displaying top 20 cheapest offerings: "
+            msg_pred = str(len(df_selected)) + " records found based on given inputs, Average Price is: $" + str(round(df_selected["price"].mean(), 1)) + ", Median Price is: $" + str(round(df_selected["price"].median(), 1)) + ", displaying top 20 cheapest offerings: "
             
             
             
