@@ -84,7 +84,7 @@
 						<b>Please Select your Room Type:</b> <br>
 
 						{% for roomType in roomTypeSet %}
-						<input type="checkbox" name="roomType" value="{{ roomType }}"> {{ roomType }} <br>
+							<input type="checkbox" name="roomType" value="{{ roomType }}" {{ "checked" if roomType in selected_RT }}> {{ roomType }} <br>
 						{% endfor %}
 
 						<br>
@@ -146,19 +146,19 @@
 							<b>Minimum Price</b>
 						</label>
 						<input class="form-control" id="minPrice" type="number" name="minPrice",
-						 placeholder="10">
+						 value="{{request_form['minPrice']}}">
 
 						<label for="maxPrice">
 							<b>Maximum Price</b>
 						</label>
 						<input class="form-control" id="maxPrice" type="number" name="maxPrice",
-						 placeholder="100">
+						 value="{{request_form['maxPrice']}}">
 
 						<label for="minNight">
 							<b>Minimum Nights</b>
 						</label>
 						<input class="form-control" id="minNight" type="number" name="minNight", 
-						placeholder="1">
+						 value="{{request_form['minNight']}}">
 
 						<!-- <label for="numReview">
 							<b>Mininum Reviews</b>

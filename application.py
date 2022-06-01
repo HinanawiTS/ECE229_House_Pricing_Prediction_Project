@@ -199,9 +199,9 @@ def home_endpoint():
     global df
     df = get_pd_df('./data/final_dataframe.csv')
     df_selected = df.copy(deep=True)
-    roomTypeSet = set(df['room_type'])
-    neighbourhoodGroupSet = set(df['neighbourhood_group'])
-    neighbourhoodSet = set(df['neighbourhood'])
+    roomTypeSet = set(sorted(set(df['room_type'])))
+    neighbourhoodGroupSet = set(sorted(set(df['neighbourhood_group'])))
+    neighbourhoodSet = set(sorted(set(df['neighbourhood'])))
 
     anchor = "top"
 
@@ -227,7 +227,10 @@ def home_endpoint():
                    'neighbourhood', 'room_type', 'price',
                    'minimum_nights', 'number_of_reviews']
 
-    return render_template('index.html', anchor=anchor, 
+    return render_template('index.html', anchor=anchor, request_form=request.form,
+                           selected_RT=request.form.getlist('roomType'),
+                           selected_NG=request.form.getlist('neighbourhoodGroup'),
+                           selected_NEI=request.form.get('neighbourhood'),
                            tables=[df_selected[col_to_show].head().to_html(
                                classes='data', header='true')],
                            roomTypeSet=roomTypeSet,
