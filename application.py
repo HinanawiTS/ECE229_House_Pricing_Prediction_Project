@@ -207,9 +207,12 @@ def plot_bokeh_map(): ###NEED TO ADD PASS-IN PARAM:pd.DataFrame (filtered df)!!!
 
 @application.route('/', methods=['POST', 'GET'])
 def home_endpoint():
+    col_to_show = ['name', 'host_name', 'room_type', 'neighbourhood_group',
+                   'neighbourhood',
+                   'minimum_nights', 'number_of_reviews', "price"]
     global df
     df = get_pd_df('./data/final_dataframe.csv')
-    df_selected = df.copy(deep=True)
+    df_selected = df.copy(deep = True).drop_duplicates(col_to_show).reset_index()
     roomTypeSet = set(sorted(set(df['room_type'])))
     neighbourhoodGroupSet = set(sorted(set(df['neighbourhood_group'])))
     neighbourhoodSet = set(sorted(set(df['neighbourhood'])))
@@ -218,9 +221,6 @@ def home_endpoint():
 
     
     ng_dict = get_ng_dict(df)
-    col_to_show = ['name', 'host_name', 'neighbourhood_group',
-                   'neighbourhood', 'room_type', 'price',
-                   'minimum_nights', 'number_of_reviews']
     msg_pred = None
     # select data according to the submitted form
     
@@ -246,7 +246,7 @@ def home_endpoint():
             msg_pred = "Less than 20 records found based on the inputs, which may not be representative of the market. Based on our model, a resonable price recommended for the given inputs is: " 
             msg_pred = msg_pred + "$" + str(price_predicted) + ". " 
             
-            msg_pred = msg_pred + " \n And we can provide the closest matches in the region: "
+            msg_pred = msg_pred + " \n And the available listings found based on the inputs are: "
         
         
         
@@ -277,13 +277,14 @@ def home_endpoint():
     #df_selected = df_selected.drop_duplicates().reset_index()
     if len(df_selected) >= 20: 
         df_selected = df_selected.head(20)
-                           
+    #df_selected = pd.concat([df_selected.drop("price", axis = 1), df_selected["price"]], axis = 1)     
     return render_template('index.html', anchor=anchor, request_form=request.form,
                            selected_RT = request.form.getlist('roomType'),
                            selected_NG = request.form.getlist('neighbourhoodGroup'),
                            selected_NEI = request.form.get('neighbourhood'),
-                           tables=[df_selected[col_to_show].to_html(
-                               classes='data', header='true')],
+                           
+                           
+                           tables = [df_selected[col_to_show].rename({"name": "Title", "host_name": "Host", "neighbourhood_group": "Region", "neighbourhood": "Neighbourhood", "room_type": "Room Type", "minimum_nights": "Minimum Nights", "number_of_reviews": "Number of Reviews", "price": "Price Per Day"}, axis = 1).to_html(classes='data', header='true')],
                            roomTypeSet = sorted(roomTypeSet),
                            neighbourhoodGroupSet = sorted(neighbourhoodGroupSet),
                            neighbourhoodSet = neighbourhoodSet, ng_dict = ng_dict,
