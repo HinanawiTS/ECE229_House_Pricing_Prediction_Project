@@ -8,8 +8,11 @@ def parse_request(df, request_form):
     inputed['neighbourhood'] = request_form.get("neighbourhood")
     inputed['neighbourhood_group'] = request_form['neighbourhoodGroup']
     inputed['room_type'] = request_form['roomType']
-    inputed['minimum_nights'] = (int) (request_form['minNight'])
-    inputed['availability_365'] = (int) (df['availability_365'].mean())
+    if request_form['minNight']:
+        inputed['minimum_nights'] = (int) (request_form['minNight'])
+    else:
+        inputed['minimum_nights'] = (int) (df['minimum_nights'].mean())
+    inputed['availability_365'] = 112
 
     return pd.Series(inputed)
 

@@ -87,67 +87,67 @@ def viz_key_df(ls, df):
 # viz_key_df(room_list, fs)
 
 
-# import pandas as pd
-# import numpy as np
-# from bokeh.tile_providers import get_provider, Vendors
-# from bokeh.plotting import figure, show, output_file
-# from bokeh.models import HoverTool
+import pandas as pd
+import numpy as np
+from bokeh.tile_providers import get_provider, Vendors
+from bokeh.plotting import figure, show, output_file
+from bokeh.models import HoverTool
 
-# from bokeh.palettes import GnBu
+from bokeh.palettes import GnBu
 
-# def visualize_count(filtered_dataset): 
-#     fs = filtered_dataset
-#     def wgs84_to_web_mercator(df, lon = "longitude", lat = "latitude"):
-#         k = 6378137
-#         df["x"] = df[lon] * (k * np.pi / 180.0)
-#         df["y"] = np.log(np.tan((90 + df[lat]) * np.pi / 360.0)) * k
-#         df["price"] = df[lon] * 0
-#         return df
+def visualize_count(filtered_dataset): 
+    fs = filtered_dataset
+    def wgs84_to_web_mercator(df, lon = "longitude", lat = "latitude"):
+        k = 6378137
+        df["x"] = df[lon] * (k * np.pi / 180.0)
+        df["y"] = np.log(np.tan((90 + df[lat]) * np.pi / 360.0)) * k
+        df["price"] = df[lon] * 0
+        return df
 
-#     CDMXhex = wgs84_to_web_mercator(fs)
-#     x = CDMXhex['x']
-#     y = CDMXhex['y']
-#     tile_provider = get_provider(Vendors.OSM)
+    CDMXhex = wgs84_to_web_mercator(fs)
+    x = CDMXhex['x']
+    y = CDMXhex['y']
+    tile_provider = get_provider(Vendors.OSM)
 
-#     palette = list(reversed(Blues[7]))
+    palette = list(reversed(Blues[7]))
 
-#     title = "Number of Airbnb Listings in "
-#     if fs["neighbourhood"].nunique() == 1: 
-#         title = title + fs["neighbourhood"].iloc[0] + ", "
-#     if fs["neighbourhood_group"].nunique() < 5: 
-#         for i in fs["neighbourhood_group"].unique(): 
-#             title = title + i + ", "
-#     title = title + "NYC"
+    title = "Number of Airbnb Listings in "
+    if fs["neighbourhood"].nunique() == 1: 
+        title = title + fs["neighbourhood"].iloc[0] + ", "
+    if fs["neighbourhood_group"].nunique() < 5: 
+        for i in fs["neighbourhood_group"].unique(): 
+            title = title + i + ", "
+    title = title + "NYC"
 
-#     p = figure(title = title, match_aspect = False, 
-#                x_axis_type = "mercator", y_axis_type = "mercator")
+    p = figure(title = title, match_aspect = False, 
+               x_axis_type = "mercator", y_axis_type = "mercator")
 
-#     p.grid.visible = True
+    p.grid.visible = True
     
-#     sz = 1000
-#     if fs["neighbourhood_group"].nunique() == 1: 
-#         sz = 500
-#     if fs["neighbourhood"].nunique() == 1: 
-#         sz = 127
-#     r, bins = p.hexbin(x, y, size = sz, 
-#                    line_color = "white", line_alpha = 0.2, 
-#                    palette = palette, hover_color = "pink", alpha = 0.7, hover_alpha = 0.2)
-#     p.add_tools(HoverTool(
-#         tooltips = [("Count","@c")], 
-#         show_arrow = True, mode = "mouse", point_policy = "follow_mouse", renderers = [r]))
+    sz = 1000
+    if fs["neighbourhood_group"].nunique() == 1: 
+        sz = 500
+    if fs["neighbourhood"].nunique() == 1: 
+        sz = 127
+    r, bins = p.hexbin(x, y, size = sz, 
+                   line_color = "white", line_alpha = 0.2, 
+                   palette = palette, hover_color = "pink", alpha = 0.7, hover_alpha = 0.2)
+    p.add_tools(HoverTool(
+        tooltips = [("Count","@c")], 
+        show_arrow = True, mode = "mouse", point_policy = "follow_mouse", renderers = [r]))
 
-#     r = p.add_tile(tile_provider)
-#     r.level = "underlay"
-#     color_mapper = linear_cmap(field_name = 'price', palette = palette, low = bins["counts"].min(), high = bins["counts"].max() + 1)
-#     color_bar = ColorBar(color_mapper=color_mapper['transform'], 
-#                          formatter = NumeralTickFormatter(format='0.0[0000]'), 
-#                          label_standoff = 13, width=8, location=(0,0), title = "count")
-#     p.add_layout(color_bar, 'right')
-#     output_notebook()
-#     p.xgrid.grid_line_color = None
-#     p.ygrid.grid_line_color = None
-#     p.axis.visible = False
-#     p.title.align = "right"
+    r = p.add_tile(tile_provider)
+    r.level = "underlay"
+    color_mapper = linear_cmap(field_name = 'price', palette = palette, low = bins["counts"].min(), high = bins["counts"].max() + 1)
+    color_bar = ColorBar(color_mapper=color_mapper['transform'], 
+                         formatter = NumeralTickFormatter(format='0.0[0000]'), 
+                         label_standoff = 13, width=8, location=(0,0), title = "count")
+    p.add_layout(color_bar, 'right')
+    output_notebook()
+    p.xgrid.grid_line_color = None
+    p.ygrid.grid_line_color = None
+    p.axis.visible = False
+    p.title.align = "right"
 #     show(p)
 
 # # # 可视化Number of Airbnbs in selected regions

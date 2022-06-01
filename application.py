@@ -15,6 +15,7 @@ from bokeh.resources import CDN
 from bokeh.palettes import RdBu
 
 from viz_FilterbyText.pipeline_new_1 import viz_key_df
+from viz_FilterbyText.pipeline_new import visualize_count, visualize_price, donut
 
 model = None
 df = None
@@ -191,7 +192,7 @@ def plot_bokeh_map(): ###NEED TO ADD PASS-IN PARAM:pd.DataFrame (filtered df)!!!
     script1, div1 = components(p)
     cdn_js = CDN.js_files[0]
     # cdn_css = CDN.css_files[0]
-    return script1, div1, cdn_js
+    return script1, div1, cdn_js    
 
 
 @application.route('/', methods=['POST', 'GET'])
@@ -213,7 +214,7 @@ def home_endpoint():
         anchor = "finder"
         df_selected = select_from_request(request.form)
         if len(df_selected) == 0:
-            encoded_input = data_transform(get_pd_df('./data/AB_NYC_2019.csv'), request.form)
+            encoded_input = data_transform(df_selected, request.form)
             price_predicted = predict('model.pkl', encoded_input)
             msg_pred = "We have no available houses in our records that match the searching input, but we can provide predicted price accrodingly:"
             request_pd = parse_request(df, request.form).to_frame().T
@@ -222,6 +223,10 @@ def home_endpoint():
 
     
     script1, div1, cdn_js = plot_bokeh_map_new(df_selected)
+    script1_count, div1_count, cdn_js_count = visualize_count(df_selected)
+    script1_price, div1_price, cdn_js_price = visualize_price(df_selected)
+    img = donut(df_selected)
+
 
     col_to_show = ['name', 'host_name', 'neighbourhood_group',
                    'neighbourhood', 'room_type', 'price',
@@ -236,7 +241,10 @@ def home_endpoint():
                            roomTypeSet=roomTypeSet,
                            neighbourhoodGroupSet=neighbourhoodGroupSet,
                            neighbourhoodSet=neighbourhoodSet, ng_dict=ng_dict,
-                           script1=script1, div1=div1, cdn_js=cdn_js, msg_pred=msg_pred)
+                           script1=script1, div1=div1, cdn_js=cdn_js, msg_pred=msg_pred,
+                           script1_count=script1_count, div1_count=div1_count, cdn_js_count=cdn_js_count,
+                           script1_price=script1_price, div1_price=div1_price, cdn_js_price=cdn_js_price,
+                           img=img)
 
 
 # @application.route('/predict', methods=['POST'])
