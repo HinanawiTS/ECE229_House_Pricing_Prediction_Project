@@ -77,7 +77,7 @@ def parse_price_range(priceRangeStrList):
     return priceRangeList
 
 
-def select_from_request(result):
+def select_from_request(result, notfound = False):
     attributes = []
     ranges = []
 
@@ -98,7 +98,8 @@ def select_from_request(result):
     if neighbourhoodList != []:
         attributes.append('neighbourhood')
         ranges.append(neighbourhoodList)
-
+    if notfound: 
+        return select(df, attributes, ranges)
     # priceRangeList = result.getlist('priceRange')
     # if priceRangeList != []:
     #     attributes.append('price')
@@ -223,17 +224,34 @@ def home_endpoint():
         anchor = "finder"
         df_selected = select_from_request(request.form)
         if len(df_selected) == 0:
-            encoded_input = data_transform(df_selected, request.form)
+            encoded_input = data_transform(df, request.form)
             price_predicted = predict('model.pkl', encoded_input)
+            
+            
+            print(price_predicted)
             msg_pred = "We have no available houses in our records that match the searching input, but we can provide predicted price accrodingly:"
             request_pd = parse_request(df, request.form).to_frame().T
             request_pd.insert(0, 'predicted_price', price_predicted)
-            df_selected = request_pd
+            #df_selected = request_pd
 
     
+    if len(df_selected) == 0: 
+        df = get_pd_df('./data/final_dataframe.csv')  # No result found, use the original dataset instead 
+        df_selected = select_from_request(request.form, notfound = True)
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    print(len(df_selected))
     script1, div1, cdn_js = plot_bokeh_map_new(df_selected)
     script1_count, div1_count, cdn_js_count = visualize_count(df_selected)
     script1_price, div1_price, cdn_js_price = visualize_price(df_selected)
+    
     img = donut(df_selected)
 
 
@@ -241,6 +259,7 @@ def home_endpoint():
                    'neighbourhood', 'room_type', 'price',
                    'minimum_nights', 'number_of_reviews']
 
+    #print(df_selected)
     return render_template('index.html', anchor=anchor, request_form=request.form,
                            selected_RT=request.form.getlist('roomType'),
                            selected_NG=request.form.getlist('neighbourhoodGroup'),
@@ -271,4 +290,5 @@ def home_endpoint():
 
 if __name__ == '__main__':
     load_model()  # load model at the beginning once only
-    application.run(host='0.0.0.0', port=5000)
+    
+    application.run(host='0.0.0.0', port=5000, debug = True, use_reloader = False)

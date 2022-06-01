@@ -65,6 +65,7 @@ def plot_bokeh_smalldf(dataframe):
     # show(p)
     
 def sort_keys(ls, df):
+    print(df.title_split)
     all_room_df=df[df.title_split.str.contains('|'.join(ls))]
     return all_room_df
 def viz_key_df(ls, df):

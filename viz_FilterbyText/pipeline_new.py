@@ -98,13 +98,13 @@ from bokeh.palettes import RdBu
 
 
 def visualize_count(filtered_dataset):
-    fs = filtered_dataset
+    fs = filtered_dataset.copy()
 
     def wgs84_to_web_mercator(df, lon="longitude", lat="latitude"):
         k = 6378137
         df["x"] = df[lon] * (k * np.pi / 180.0)
         df["y"] = np.log(np.tan((90 + df[lat]) * np.pi / 360.0)) * k
-        df["price"] = df[lon] * 0
+        #df["price"] = df[lon] * 0
         return df
 
     CDMXhex = wgs84_to_web_mercator(fs)
@@ -243,7 +243,7 @@ def donut(dataset):
 
 
 def visualize_price(filtered_dataset):
-    fs = filtered_dataset
+    fs = filtered_dataset.copy()
 
     def wgs84_to_web_mercator(df, lon="longitude", lat="latitude"):
         k = 6378137
