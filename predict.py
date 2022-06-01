@@ -3,13 +3,13 @@ import pickle
 from sklearn.preprocessing import OneHotEncoder
 
 
-def parse_request(request_form):
+def parse_request(df, request_form):
     inputed = {}
     inputed['neighbourhood'] = request_form.get("neighbourhood")
     inputed['neighbourhood_group'] = request_form['neighbourhoodGroup']
     inputed['room_type'] = request_form['roomType']
     inputed['minimum_nights'] = (int) (request_form['minNight'])
-    inputed['availability_365'] = 90   # hard code for future modification
+    inputed['availability_365'] = (int) (df['availability_365'].mean())
 
     return pd.Series(inputed)
 
@@ -21,7 +21,7 @@ def data_transform(df, request_form):
     encoded = encoded[encoded["price"] < 1000]
     encoded = encoded.drop(["name", "price"], axis=1)
     
-    inputed = parse_request(request_form)
+    inputed = parse_request(df, request_form)
     encoded = encoded.append(inputed, ignore_index=True)
 
     encoded = pd.get_dummies(

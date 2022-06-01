@@ -22,7 +22,17 @@
 </head>
 
 <body>
-	<div class="top-container">
+	<script>
+		function jump(h){
+			var url = location.href;               //Save down the URL without hash.
+			location.href = "#"+h;                 //Go to the target element.
+			history.replaceState(null,null,url);   //Don't like hashes. Changing it back.
+		}
+	
+		jump('{{ anchor }}');
+	</script>
+
+	<div class="top-container" id="top">
       <div class="title-text">
         <h1>New York Airbnb</h1>
         <h2>find your dream home</h2>
@@ -57,7 +67,7 @@
 			</p>
       	</div>
     </div>
-	<div class="container-fluid">
+	<div class="container-fluid" id="finder">
 		<div class="row">
 			<div class="col-md-12">
 				<h3>
@@ -162,14 +172,14 @@
 						<input class="form-control" id="maxPrice" type="number" name="maxPrice">
 
 						<label for="minNight">
-							<b>Minimum Nights</b>b
+							<b>Minimum Nights</b>
 						</label>
 						<input class="form-control" id="minNight" type="number" name="minNight">
 
-						<label for="numReview">
+						<!-- <label for="numReview">
 							<b>Mininum Reviews</b>
 						</label>
-						<input class="form-control" id="minReview" type="number" name="minReview">
+						<input class="form-control" id="minReview" type="number" name="minReview"> -->
 					</div>
 
 					<!-- <div class="form-group">
