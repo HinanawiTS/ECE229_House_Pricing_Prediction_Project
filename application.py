@@ -31,11 +31,11 @@ def select(df, attributes, ranges):
     selected_df = df.copy(deep=True)
     for i, attribute in enumerate(attributes):
         if isinstance(ranges[i], list):
-            if isinstance(ranges[i][0], list):
-                for r in ranges[i]:
-                    selected_df = selected_df[selected_df[attribute].isin(r)]
-            else:
-                selected_df = selected_df[selected_df[attribute].isin(ranges[i])]
+            # if isinstance(ranges[i][0], list):
+            #     for r in ranges[i]:
+            #         selected_df = selected_df[selected_df[attribute].isin(r)]
+            # else:
+            selected_df = selected_df[selected_df[attribute].isin(ranges[i])]
         else:
             selected_df = selected_df[selected_df[attribute] > ranges[i]]
 
@@ -67,13 +67,15 @@ def get_pd_df(path):
 
 
 def parse_price_range(priceRangeStrList):
+    print(priceRangeStrList)
     priceRangeList = []
     for priceRangeStr in priceRangeStrList:
         loStr, hiStr = priceRangeStr.split('-')
         if hiStr == '':
-            priceRangeList.append(list(range(int(loStr), 10000)))
-        else:
-            priceRangeList.append(list(range(int(loStr), int(hiStr))))
+            hiStr = '20000'
+        if loStr == '':
+            loStr = '0'
+        priceRangeList.append(list(range(int(loStr), int(hiStr))))
     return priceRangeList
 
 
@@ -100,10 +102,6 @@ def select_from_request(result, notfound = False):
         ranges.append(neighbourhoodList)
     if notfound: 
         return select(df, attributes, ranges)
-    # priceRangeList = result.getlist('priceRange')
-    # if priceRangeList != []:
-    #     attributes.append('price')
-    #     ranges.append(parse_price_range(priceRangeList))
 
     priceRange = '-'
     min_price = result.get('minPrice')
@@ -268,9 +266,12 @@ def home_endpoint():
     for i in ng_dict.keys(): 
         ng_dict[i] = list(sorted(ng_dict[i]))
     
-    script1, div1, cdn_js = plot_bokeh_map_new(df_selected)
-    script1_count, div1_count, cdn_js_count = visualize_count(df_selected)
-    script1_price, div1_price, cdn_js_price = visualize_price(df_selected)
+    if (df_selected.empty):
+        script1 = div1 = cdn_js = script1_count = div1_count = cdn_js_count = script1_price = div1_price = cdn_js_price = None
+    else:
+        script1, div1, cdn_js = plot_bokeh_map_new(df_selected)
+        script1_count, div1_count, cdn_js_count = visualize_count(df_selected)
+        script1_price, div1_price, cdn_js_price = visualize_price(df_selected)
     
     img = donut(df_selected)
 
