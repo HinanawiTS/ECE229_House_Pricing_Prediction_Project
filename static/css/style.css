@@ -30,6 +30,7 @@ h3 {
 h4 {
   color: #11999E;
   font-family: 'Montserrat', sans-serif;
+  padding-top: 50px;
 }
 
 p {
@@ -76,6 +77,17 @@ a:hover {
   /*text-align: left;*/
 }
 
+.vis-container{
+  /*background-color:#F9F3EE;*/
+}
+
+.vis-image{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30%;
+}
+
 .background{
   width: 70%;
   margin: 100px auto 100px auto;
@@ -106,6 +118,17 @@ a:hover {
 
 .btn{
    background-color:#66BFBF;
+}
+
+.col-md-3{
+}
+
+.tab-pane {
+  display: flex;
+}
+
+.half {
+  flex: 50%;
 }
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */

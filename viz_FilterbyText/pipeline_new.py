@@ -147,7 +147,7 @@ def visualize_count(filtered_dataset):
                          formatter=NumeralTickFormatter(format='0.0[0000]'),
                          label_standoff=13, width=8, location=(0, 0), title="count")
     p.add_layout(color_bar, 'right')
-    output_notebook()
+    #output_notebook()
     p.xgrid.grid_line_color = None
     p.ygrid.grid_line_color = None
     p.axis.visible = False

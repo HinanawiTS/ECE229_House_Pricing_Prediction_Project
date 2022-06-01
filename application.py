@@ -245,7 +245,7 @@ def home_endpoint():
                            selected_RT=request.form.getlist('roomType'),
                            selected_NG=request.form.getlist('neighbourhoodGroup'),
                            selected_NEI=request.form.get('neighbourhood'),
-                           tables=[df_selected[col_to_show].drop_duplicates().to_html(
+                           tables=[df_selected[col_to_show].drop_duplicates().head(10).to_html(
                                classes='data', header='true')],
                            roomTypeSet=roomTypeSet,
                            neighbourhoodGroupSet=neighbourhoodGroupSet,

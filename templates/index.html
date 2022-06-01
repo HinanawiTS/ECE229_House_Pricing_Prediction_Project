@@ -36,17 +36,17 @@
       </div>
     </div>
 	<div class="middle-container" >
-		<div class="background">
+		<!--<div class="background">
 			<h3>Background</h3>
             <p class="intro">
 				The housing rental market in New York City is gradually recovering after a rough time during the pandemic. Although the city has undergone several difficulties during the past two years, including rising property taxes, business shutdowns, etc, it's still one of the most competitive property markets in the U.S. Moreover, with a large amount of effort we made in fighting against coronavirus, we are gradually recovering and moving towards our regular life.
 			With that being said, the economy in NYC revives: there is the reopening of restaurants, the growth of tourist industries, and the rapid rising of housing rentals. It is crucial for travelers, long-term tenants, and landlords to understand the housing rental trend in NYC and locate their desired rooms, either to stay for a few nights or to invest for future profits.
 			</p>
-       	</div>
+       	</div>-->
 		<div class="Question-to-investigate">
         	<h3>Question to investigate</h3>
         	<p class="intro">
-				We would like to provide local hosts and renters with a personalized and interactive system that helps filter and choose certain properties while giving a reference price. This system will be deployed on AWS servers and will include sophisticated modules for data pipeline, analytical models, results, visualization, and interactive on-the-fly analysis.
+				We would like to provide local hosts and renters with a personalized and interactive system that helps filter and choose certain properties while giving a reference price. <br>This system will be deployed on AWS servers and will include sophisticated modules for data pipeline, analytical models, results, visualization, and interactive on-the-fly analysis.
 			</p>
       	</div>
 		<div class="User-Story">
@@ -62,6 +62,11 @@
 			</p>
       	</div>
     </div>
+	<div class="vis-container">
+		<h3>Dataset Visualization</h3>
+		<h4>Room types available in New York</h4>
+		<img src="{{ img }}" class="vis-image">
+	</div>
 	<div class="container-fluid" id="finder">
 		<div class="row">
 			<div class="col-md-12">
@@ -224,15 +229,11 @@
 							</p>
 						</div>
 						<div class="tab-pane" id="tab3">
-							<p>
-								{{script1_count | safe}}
-								{{div1_count | safe}}
-								<br>
-								{{script1_price | safe}}
-								{{div1_price | safe}}
-								<br>
-								<img src="{{ img }}">
-							</p>
+								 {{script1_count | safe}}
+								 {{div1_count | safe}}
+								  <br>
+								 {{script1_price | safe}}
+								 {{div1_price | safe}}
 						</div>
 					</div>
 				</div>
