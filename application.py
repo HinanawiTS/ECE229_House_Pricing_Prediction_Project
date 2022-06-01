@@ -30,8 +30,6 @@ def select(df_selected, attributes, ranges):
 
     df_selected = df_selected.copy(deep=True)
     for i, attribute in enumerate(attributes):
-        print(ranges[i])
-        print(df_selected.head())
         if isinstance(ranges[i], list):
             # if isinstance(ranges[i][0], list):
             #     for r in ranges[i]:
@@ -197,9 +195,6 @@ def plot_bokeh_map(): ###NEED TO ADD PASS-IN PARAM:pd.DataFrame (filtered df)!!!
     p.axis.visible = False
     p.title.align = "right"
 
-    # output_notebook()
-    # show(p)
-    # print(len(components(p)))
     script1, div1 = components(p)
     cdn_js = CDN.js_files[0]
     # cdn_css = CDN.css_files[0]
@@ -233,8 +228,6 @@ def home_endpoint():
             encoded_input = data_transform(df, request.form)
             price_predicted = predict('model.pkl', encoded_input)
             
-            
-            #print(price_predicted)
             msg_pred = "We have no available record that match the searching input, but our model recommands a reasonable price based on the market trend" 
             msg_pred = msg_pred + " for the given inputs is: " + "$" + str(price_predicted) + ". " 
             # msg_pred = msg_pred + " \n And we can provide the closest matches in the region: "
