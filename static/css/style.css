@@ -5,6 +5,7 @@ body {
   margin: 0;
   text-align: center;
   font-family: 'Merriweather', serif;
+  background-color: #F9F3EE; 
 }
 
 h1 {
@@ -20,15 +21,14 @@ h2 {
   font-weight: normal;
   padding-bottom: 10px;
 }
-
 h3 {
-  color: #66BFBF;
+  color: #66aabf;
   font-family: 'Montserrat', sans-serif;
   padding-top: 50px;
 }
 
 h4 {
-  color: #11999E;
+  color: #67aabf;
   font-family: 'Montserrat', sans-serif;
   padding-top: 50px;
 }
@@ -53,7 +53,7 @@ a{
 }
 
 a:hover {
-  color: #EAF6F6;
+  color: #7b1de6;
 }
 
 .title-text{
@@ -73,7 +73,7 @@ a:hover {
 
 .middle-container {
   background-color:#F9F3EE;
-  margin: 100px auto 0 auto;
+  margin: 0 auto 0 auto;
   /*text-align: left;*/
 }
 
@@ -96,13 +96,13 @@ a:hover {
 
 .Question-to-investigate {
   width: 70%;
-  margin: 100px auto 100px auto;
+  margin: 0 auto 0 auto;
   text-align: left;
 }
 
 .User-Story {
   width: 70%;
-  margin: 100px auto 100px auto;
+  margin: 0 auto 0 auto;
   text-align: left;
 }
 
@@ -148,21 +148,74 @@ select{
   font-size: 1em;
   color:#40514E;
 }
-/* .min-max { 
-  width: 200px; float: left; margin: 0 23px 0 0;
-  display: block; margin: 0 0 3px; 
-  font-size: 1.0em; 
-  font-weight: bold; 
-  border: 1px solid #D0D0D0; 
-  padding: 5px;
-} */
-/* span { 
-  display: block; margin: 0 0 3px; 
-  font-size: 1.0em; 
-  font-weight: bold; 
-} */
-/* input { 
-  width: 200px; 
-  border: 1px solid #D0D0D0; 
-  padding: 5px;
-} */
+
+div#loading {
+  display: none;
+  height: 2000px;
+  background: no-repeat; 
+}
+div#initial_loading {
+  height: 2000px;
+  background: no-repeat; 
+}
+.sk-cube-grid {
+  width: 170px;
+  height: 170px;
+  margin: 200px auto 127px auto;
+}
+
+.sk-cube-grid .sk-cube {
+  width: 33%;
+  height: 33%;
+  background-color: #67aabf;
+  float: left;
+  -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+          animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out; 
+}
+.sk-cube-grid .sk-cube1 {
+  -webkit-animation-delay: 0.2s;
+          animation-delay: 0.2s; }
+.sk-cube-grid .sk-cube2 {
+  -webkit-animation-delay: 0.3s;
+          animation-delay: 0.3s; }
+.sk-cube-grid .sk-cube3 {
+  -webkit-animation-delay: 0.4s;
+          animation-delay: 0.4s; }
+.sk-cube-grid .sk-cube4 {
+  -webkit-animation-delay: 0.1s;
+          animation-delay: 0.1s; }
+.sk-cube-grid .sk-cube5 {
+  -webkit-animation-delay: 0.2s;
+          animation-delay: 0.2s; }
+.sk-cube-grid .sk-cube6 {
+  -webkit-animation-delay: 0.3s;
+          animation-delay: 0.3s; }
+.sk-cube-grid .sk-cube7 {
+  -webkit-animation-delay: 0s;
+          animation-delay: 0s; }
+.sk-cube-grid .sk-cube8 {
+  -webkit-animation-delay: 0.1s;
+          animation-delay: 0.1s; }
+.sk-cube-grid .sk-cube9 {
+  -webkit-animation-delay: 0.2s;
+          animation-delay: 0.2s; }
+
+@-webkit-keyframes sk-cubeGridScaleDelay {
+  0%, 70%, 100% {
+    -webkit-transform: scale3D(1, 1, 1);
+            transform: scale3D(1, 1, 1);
+  } 35% {
+    -webkit-transform: scale3D(0, 0, 1);
+            transform: scale3D(0, 0, 1); 
+  }
+}
+
+@keyframes sk-cubeGridScaleDelay {
+  0%, 70%, 100% {
+    -webkit-transform: scale3D(1, 1, 1);
+            transform: scale3D(1, 1, 1);
+  } 35% {
+    -webkit-transform: scale3D(0, 0, 1);
+            transform: scale3D(0, 0, 1);
+  } 
+}
