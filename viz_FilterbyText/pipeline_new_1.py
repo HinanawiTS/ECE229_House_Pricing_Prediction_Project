@@ -21,7 +21,11 @@ import pandas as pd
 from bokeh.models import WheelZoomTool
 from bokeh.palettes import RdBu
 def plot_bokeh_smalldf(dataframe):
-    fs = dataframe.copy()
+    if len(dataframe) > 500: 
+        fs = dataframe.head(500)
+        
+    else: 
+        fs = dataframe.copy()
     df = fs
     chosentile = get_provider(Vendors.OSM)
     palette = RdBu[7]
@@ -32,7 +36,7 @@ def plot_bokeh_smalldf(dataframe):
     # Set tooltips - these appear when we hover over a data point in our map, very nifty and very useful
     tooltips = [("Price","@price"), ("Region","@neighbourhood"), ("Keywords","@title_split"), ("Number of Reviews", "@number_of_reviews")]
     # Create figure
-    p = figure(title = 'Airbnb Listings Selected', 
+    p = figure( 
                x_axis_type = "mercator", 
                y_axis_type = "mercator", 
                x_axis_label = 'Longitude', 
@@ -41,11 +45,14 @@ def plot_bokeh_smalldf(dataframe):
                plot_width = 1050, plot_height = 600, tools = ["pan", "reset", "save", "wheel_zoom"])
     # Add map tile
     p.add_tile(chosentile)
+
     # Add points using mercator coordinates
-    sz = 2
+    sz = 7
+    line_width = 1.2
     if (len(fs) < 70) or (fs["neighbourhood"].nunique() == 1): 
-        sz = 12
-    p.circle(x = 'mercator_x', y = 'mercator_y', color = color_mapper, source = source, size = sz, fill_alpha = 0.9)
+        sz = 12.7
+        line_width = 2.7
+    p.circle(x = 'mercator_x', y = 'mercator_y', color = color_mapper, source = source, size = sz, fill_alpha = 0.7, line_width = line_width, line_color = "black")
     # Defines color bar
     color_bar = ColorBar(color_mapper=color_mapper['transform'], 
                          formatter = NumeralTickFormatter(format='0.0[0000]'), 
@@ -65,9 +72,9 @@ def plot_bokeh_smalldf(dataframe):
 
     
 def sort_keys(ls, df):
-    #print(df.title_split)
-    all_room_df=df[df.title_split.str.contains('|'.join(ls))]
-    return all_room_df
+    #all_room_df = df[df.title_split.str.contains('|'.join(ls))]
+
+    return df
 def viz_key_df(ls, df):
     key_df=sort_keys(ls, df)
     return plot_bokeh_smalldf(key_df)

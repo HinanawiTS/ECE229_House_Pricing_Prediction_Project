@@ -49,12 +49,11 @@ def visualize_count(filtered_dataset):
     title = "Number of Airbnb Listings in "
     if fs["neighbourhood"].nunique() == 1:
         title = title + fs["neighbourhood"].iloc[0] + ", "
-    if fs["neighbourhood_group"].nunique() < 5:
-        for i in fs["neighbourhood_group"].unique():
-            title = title + i + ", "
+    for i in fs["neighbourhood_group"].unique():
+        title = title + i + ", "
     title = title + "NYC"
 
-    p = figure(title=title, match_aspect = False, tools = ["pan", "reset", "save", "wheel_zoom"], 
+    p = figure(match_aspect = False, tools = ["pan", "reset", "save", "wheel_zoom"], 
                x_axis_type="mercator", y_axis_type="mercator",plot_width=1050,plot_height=600)
 
     p.grid.visible = True
@@ -67,6 +66,7 @@ def visualize_count(filtered_dataset):
     r, bins = p.hexbin(x, y, size=sz,
                        line_color="white", line_alpha=0.2,
                        palette=palette, hover_color="pink", alpha=0.7, hover_alpha=0.2)
+
     p.add_tools(HoverTool(
         tooltips=[("Count", "@c")],
         show_arrow=True, mode="mouse", point_policy="follow_mouse", renderers=[r]))
@@ -77,7 +77,7 @@ def visualize_count(filtered_dataset):
                                low=bins["counts"].min(), high=bins["counts"].max() + 1)
     color_bar = ColorBar(color_mapper=color_mapper['transform'],
                          formatter=NumeralTickFormatter(format='0.0[0000]'),
-                         label_standoff=13, width=8, location=(0, 0), title="count")
+                         label_standoff=13, width=8, location=(0, 0), title = "Number of Listings")
     p.add_layout(color_bar, 'right')
     p.xgrid.grid_line_color = None
     p.ygrid.grid_line_color = None
@@ -87,7 +87,7 @@ def visualize_count(filtered_dataset):
     p.toolbar.logo = None
     script1, div1 = components(p)
     cdn_js = CDN.js_files[0]
-    return script1, div1, cdn_js
+    return script1, div1, cdn_js, title
 
 def donut(dataset):
     fs = dataset.copy()
@@ -139,9 +139,10 @@ def visualize_price(filtered_dataset):
     x = CDMXhex['x']
     y = CDMXhex['y']
     tile_provider = get_provider(Vendors.OSM)
-
+    avg_price = CDMXhex.groupby("x")["price"].mean().round(0).values
     palette = RdBu[11]
 
+    
     title = "Price of Airbnb Listings in "
     if fs["neighbourhood"].nunique() == 1:
         title = title + fs["neighbourhood"].iloc[0] + ", "
@@ -149,26 +150,28 @@ def visualize_price(filtered_dataset):
         title = title + i + ", "
     title = title + "NYC"
 
-    p = figure(title=title, match_aspect=False, tools = ["pan", "reset", "save", "wheel_zoom"], 
+    sz = 1500
+    if fs["neighbourhood_group"].nunique() == 1:
+        sz = 800
+    if fs["neighbourhood"].nunique() == 1:
+        sz = 200
+
+    p = figure(match_aspect=False, tools = ["pan", "reset", "save", "wheel_zoom"], 
                x_axis_type="mercator", y_axis_type="mercator",plot_width=1050,plot_height=600)
 
     p.grid.visible = True
 
-    r, bins = p.hexbin(x, y, size=127,
+    r, bins = p.hexbin(x, y, size = sz,
                        line_color="white", line_alpha=0.2,
                        palette=palette, hover_color="pink", alpha=0.7, hover_alpha=0.2)
-    #print(bins["q"] + bins["r"])
-    p.add_tools(HoverTool(
-        tooltips=[("Price", "@g"), ("Region", "@neighbourhood")],
-        show_arrow=True, mode="mouse", point_policy="follow_mouse", renderers=[r]))
 
     r = p.add_tile(tile_provider)
     r.level = "underlay"
     color_mapper = linear_cmap(
-        field_name='price', palette=palette, low=fs['price'].min(), high=fs['price'].max())
-    color_bar = ColorBar(color_mapper=color_mapper['transform'],
+        field_name='price', palette=palette, low = min(avg_price), high = max(avg_price))
+    color_bar = ColorBar(color_mapper=color_mapper['transform'], 
                          formatter=NumeralTickFormatter(format='0.0[0000]'),
-                         label_standoff=13, width=8, location=(0, 0), title="price")
+                         label_standoff=13, width=8, location=(0, 0), title = "Average Price")
     p.add_layout(color_bar, 'right')
     output_notebook()
     p.xgrid.grid_line_color = None
@@ -179,4 +182,4 @@ def visualize_price(filtered_dataset):
     p.toolbar.logo = None
     script1, div1 = components(p)
     cdn_js = CDN.js_files[0]
-    return script1, div1, cdn_js
+    return script1, div1, cdn_js, title

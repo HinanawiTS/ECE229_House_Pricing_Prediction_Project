@@ -23,18 +23,19 @@ h2 {
 }
 h3 {
   color: #66aabf;
+  
   font-family: 'Montserrat', sans-serif;
-  padding-top: 50px;
+  padding-top: 50px; font-weight: bolder;  
 }
 
 h4 {
-  color: #67aabf;
+   font-weight: bold; 
   font-family: 'Montserrat', sans-serif;
   padding-top: 50px;
 }
 
 p {
-  line-height: 2;
+  line-height: 2; 
 }
 
 hr {

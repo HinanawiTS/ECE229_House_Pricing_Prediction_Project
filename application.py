@@ -1,5 +1,5 @@
 # Serve model as a flask application
-
+import time 
 import pickle
 from flask import Flask, request, render_template
 import pandas as pd
@@ -37,20 +37,11 @@ def select(df_selected, attributes, ranges):
 
 
 def get_ng_dict(df):
-    ng_dict = {}
-    for _, row in df.iterrows():
-        ng = row['neighbourhood_group']
-        if ng not in ng_dict.keys():
-            ng_dict[ng] = set()
-        ng_dict[ng].add(row['neighbourhood'])
-
-    for key, val in ng_dict.items():
-        ng_dict[key] = list(val)
-    return ng_dict
-
+    return df.groupby("neighbourhood_group")["neighbourhood"].unique().to_dict()
 
 def load_model():
     global model
+    
     # model variable refers to the global variable
     with open('model.pkl', 'rb') as f:
         model = pickle.load(f)
@@ -124,18 +115,22 @@ def select_from_request(df_selected, result, notfound = False):
 
 def plot_bokeh_map_new(df_new):
 
+    
     room_list = ['bedroom', 'bedrooms', 'bed',
                  'beds', 'bdrs', 'bdr', 'room', 'rooms',
                  'apt','apartment','studio','loft','townhouse',
                  'bath','baths']
     fs = df_new.copy()
-
     return viz_key_df(room_list, fs)
  
 
 
 @application.route('/actual_app', methods=['POST', 'GET'])
 def actual_app():
+
+    #import cProfile, pstats
+    #profiler = cProfile.Profile()
+    #profiler.enable()
     col_to_show = ['name', 'host_name', 'room_type', 'neighbourhood_group',
                    'neighbourhood',
                    'minimum_nights', 'number_of_reviews', "price"]
@@ -143,25 +138,58 @@ def actual_app():
     df = get_pd_df('./data/final_dataframe.csv')
 
     df_selected = df.copy(deep = True).drop_duplicates(col_to_show).reset_index(drop=True)
-    roomTypeSet = set(sorted(set(df['room_type'])))
-    neighbourhoodGroupSet = set(sorted(set(df['neighbourhood_group'])))
-    neighbourhoodSet = set(sorted(set(df['neighbourhood'])))
-
-    anchor = "top"
-
+    roomTypeSet = set(df['room_type'])
+    neighbourhoodGroupSet = set(df['neighbourhood_group'])
     
-    ng_dict = get_ng_dict(df)
+
     msg_pred = str(len(df_selected)) + " records found based on given inputs, Average Price is: $" + str(round(df_selected["price"].mean(), 1)) + ", Median Price is: $" + str(round(df_selected["price"].median(), 1)) + ", displaying top 20 cheapest offerings: "
+    anchor = "top"
+    ng_dict = get_ng_dict(df)
     # select data according to the submitted form
-    
-    if request.method == 'POST':
+    for i in ng_dict.keys(): 
+        ng_dict[i] = list(sorted(ng_dict[i]))
+    if request.method == 'POST': 
+        err_message = False
+        roomTypeList = request.form.getlist('roomType')
+        if roomTypeList == []:
+            err_message = True
+        neighbourhoodGroupList = request.form.getlist('neighbourhoodGroup')
+        if neighbourhoodGroupList == []:
+            err_message = True 
+        neighbourhoodList = request.form.getlist('neighbourhood')
+        if neighbourhoodList == []:
+            err_message = True 
+        if err_message: 
+            err_message = "In order to generate analysis, Please select all the required inputs: Room Type, Region, Neighbourhood. "
+            msg_pred = script1 = script1_count = err_message
+            div1 = cdn_js = div1_count = cdn_js_count = script1_price = div1_price = cdn_js_price = "" 
+
+            #profiler.disable()
+            #stats = pstats.Stats(profiler).sort_stats('cumtime')
+            #stats.print_stats()
+            return render_template('actual_app.html', anchor=anchor, request_form=request.form,
+                           selected_RT = request.form.getlist('roomType'),
+                           selected_NG = request.form.getlist('neighbourhoodGroup'),
+                           selected_NEI = request.form.get('neighbourhood'),   
+                           tables = "", 
+                           roomTypeSet = sorted(roomTypeSet),
+                           neighbourhoodGroupSet = sorted(neighbourhoodGroupSet),
+                           neighbourhoodSet = "", ng_dict = ng_dict,
+                           script1=script1, div1=div1, cdn_js=cdn_js, msg_pred=msg_pred,
+                           script1_count=script1_count, div1_count=div1_count, cdn_js_count=cdn_js_count,
+                           script1_price=script1_price, div1_price=div1_price, cdn_js_price=cdn_js_price,
+                           img = "")
+
+
+
+        time.sleep(1)
         anchor = "finder"
         df_selected = select_from_request(df_selected, request.form).drop_duplicates(col_to_show).reset_index(drop=True)
-        
+        msg_pred = str(len(df_selected)) + " records found based on given inputs, Average Price is: $" + str(round(df_selected["price"].mean(), 1)) + ", Median Price is: $" + str(round(df_selected["price"].median(), 1)) + ", displaying top 20 cheapest offerings: "
         if len(df_selected) == 0:
             encoded_input = data_transform(df, request.form)
             price_predicted = predict('model.pkl', encoded_input)
-            msg_pred = "We have no available record that match the searching input, but our model recommands a reasonable price based on the market trend" 
+            msg_pred = "We have no available record that match the input, but our model recommands a reasonable price based on the market trend" 
             msg_pred = msg_pred + " for the given inputs is: " + "$" + str(price_predicted) + ". " 
             
         elif len(df_selected) < 20: 
@@ -174,25 +202,27 @@ def actual_app():
         
         else: 
             msg_pred = str(len(df_selected)) + " records found based on given inputs, Average Price is: $" + str(round(df_selected["price"].mean(), 1)) + ", Median Price is: $" + str(round(df_selected["price"].median(), 1)) + ", displaying top 20 cheapest offerings: "       
-    
-    # if len(df_selected) == 0: 
-    #     df = get_pd_df('./data/final_dataframe.csv')  # No result found, use the closest matches instead 
-    #     df_selected = select_from_request(df_selected, request.form, notfound = True).drop_duplicates(col_to_show).reset_index(drop=True)
-            
-    for i in ng_dict.keys(): 
-        ng_dict[i] = list(sorted(ng_dict[i]))
-    
+
     if (df_selected.empty):
         script1 = script1_count = "No result was found given the inputs. " 
-        
-        div1 = cdn_js = div1_count = cdn_js_count = script1_price = div1_price = cdn_js_price = "" 
-    else:
-        script1, div1, cdn_js = plot_bokeh_map_new(df_selected)
-        script1_count, div1_count, cdn_js_count = visualize_count(df_selected)
-        script1_price, div1_price, cdn_js_price = visualize_price(df_selected)
-    
-    img = donut(df_selected)
+        map_title = "" 
+        div1 = cdn_js = div1_count = cdn_js_count = script1_price = div1_price = cdn_js_price = img = cs_title = pr_title = donut_title = "" 
 
+    else:
+        if (len(df_selected) > 500): 
+            script1, div1, cdn_js = plot_bokeh_map_new(df_selected)
+            map_title = "Too many records found, displaying top 500 cheapest listings. " 
+
+
+
+        else: 
+            map_title = "" 
+            script1, div1, cdn_js = plot_bokeh_map_new(df_selected)
+        script1_count, div1_count, cdn_js_count, cs_title = visualize_count(df_selected)
+        script1_price, div1_price, cdn_js_price, pr_title = visualize_price(df_selected)
+        donut_title = "Percentage of Matching Room Types"
+    
+        img = donut(df_selected)
     if len(df_selected) >= 20: 
         df_selected = df_selected.head(20)
     if len(df_selected) != 0: 
@@ -206,11 +236,11 @@ def actual_app():
                            tables = tables_shown, 
                            roomTypeSet = sorted(roomTypeSet),
                            neighbourhoodGroupSet = sorted(neighbourhoodGroupSet),
-                           neighbourhoodSet = neighbourhoodSet, ng_dict = ng_dict,
+                           neighbourhoodSet = "", ng_dict = ng_dict, map_title = map_title, 
                            script1=script1, div1=div1, cdn_js=cdn_js, msg_pred=msg_pred,
-                           script1_count=script1_count, div1_count=div1_count, cdn_js_count=cdn_js_count,
-                           script1_price=script1_price, div1_price=div1_price, cdn_js_price=cdn_js_price,
-                           img = img)
+                           script1_count=script1_count, div1_count=div1_count, cdn_js_count=cdn_js_count, cs_title = cs_title, 
+                           script1_price=script1_price, div1_price=div1_price, cdn_js_price=cdn_js_price, pr_title = pr_title, 
+                           img = img, donut_title = donut_title)
 @application.route('/', methods=['POST', 'GET'])
 def home_endpoint():
 

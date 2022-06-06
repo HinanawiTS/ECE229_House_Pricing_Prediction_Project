@@ -32,27 +32,20 @@
 
 	<div class="container-fluid" id="finder">
 		<div class="row">
-			<div class="col-md-12">
-				<h3>
-					<b>Your Dream House Finder </b><br>
-				</h3>
-			</div>
-		</div>
-		<div class="row">
 			<div class="col-md-3">
 				<form role="form" method="post"><br><br><br>
 					<div class="checkbox">
-						<b> <label style = "font-size: 17px">Please Select the Room Type: </label></b><br>
+						<b> <label style = "font-size: 17px">Select the Room Type (Required): </label></b><br>
 							
 						{% for roomType in roomTypeSet %}
-						<label style = "font-size: 17px">{{ roomType }}</label> <input style = "height: 20px; width: 20px;" type="checkbox" name="roomType" value="{{ roomType }}" {{ "checked" if roomType in selected_RT }}> <br>
+						<label style = "font-size: 17px">{{ roomType }}</label> <input style = "height: 20px; width: 20px;" type="checkbox" name="roomType" value="{{ roomType }}"> <br>
 						{% endfor %}
 
 						
 					</div>
 
 					<div class="checkbox" id="neighbourhoodGroup">
-						<b><label style = "font-size: 17px">Please Select the Desired Regions: </label></b><br>
+						<b><label style = "font-size: 17px">Select the Desired Region(s) (Required): </label></b><br>  
 
 						{% for neighbourhoodGroup in neighbourhoodGroupSet %}
 						<label style = "font-size: 17px">{{ neighbourhoodGroup }}</label> <input style = "height: 20px; width: 20px;" type="checkbox" name="neighbourhoodGroup" value="{{ neighbourhoodGroup }}"
@@ -76,7 +69,7 @@
 							}
 						</script>
 
-						<label style = "font-size: 17px"><b>Please Select the Desired Neighbourhood: </b></label><br>
+						<label style = "font-size: 17px"><b>Select the Desired Neighbourhood (Required): </b></label><br>
 						<select id="neighbourhoodSelect" name="neighbourhood"> 
 							<option value="none" selected disabled hidden> Select One </option>
 						</select> <br>
@@ -146,20 +139,25 @@
 						</div>
 						<div class="tab-pane" id="tab2">
 							<p>
-								<!-- <img alt="Bootstrap Image Preview" src="static/figure/temp_map.png" class="rounded">-->
+								<div align="left"><b><p style = "font-size: 20px; color: #477685; margin-bottom: 1em;">{{map_title}}</p></b></div>
 								{{script1 | safe}}
 								{{div1 | safe}}
 							</p>
 						</div>
-						<div class="tab-pane" id="tab3">
+
+
+
+						<div class="tab-pane" id="tab3"> <br> 
+							<div align="left"><b><p style = "font-size: 20px; color: #477685; margin-bottom: 1em;">{{cs_title}}</p></b></div>
 							{{script1_count | safe}}
 							{{div1_count | safe}}
 							<br>
+							<div align="left"><b><p style = "font-size: 20px; color: #477685; margin-bottom: 1em;">{{pr_title}}</p></b></div>
 							{{script1_price | safe}}
 							{{div1_price | safe}}
 							<br>
 
-							<p style="text-align: left;"> <b> Percentage of matching rooms </b> </p>
+							<div align="left"><b><p style = "font-size: 20px; color: #477685; margin-bottom: 1em;">{{donut_title}}</p></b></div>
 							<br>
 							<img src="{{ img }}" align="left"> <!--class="vis-image"-->
 							<br>
@@ -188,8 +186,9 @@
 	<script type = "text/javascript">
         function loading(){
             $("#loading").show();
-            $("#finder").hide();       
+            $("#finder").hide();   
         }
+
 	</script>
 	<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>

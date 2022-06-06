@@ -6,7 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Your Dream Houses</title>
+	<title>Your Dream Rental Houses</title>
 
 	<meta name="description" content="Source code generated using layoutit.com">
 	<meta name="author" content="LayoutIt!">
@@ -35,30 +35,32 @@
         <h2>find your dream house</h2>
       </div>
 </div><div class="middle-container">
-		<!--<div class="background">
-			<h3>Background</h3>
-            <p class="intro">
-				The housing rental market in New York City is gradually recovering after a rough time during the pandemic. Although the city has undergone several difficulties during the past two years, including rising property taxes, business shutdowns, etc, it's still one of the most competitive property markets in the U.S. Moreover, with a large amount of effort we made in fighting against coronavirus, we are gradually recovering and moving towards our regular life.
-			With that being said, the economy in NYC revives: there is the reopening of restaurants, the growth of tourist industries, and the rapid rising of housing rentals. It is crucial for travelers, long-term tenants, and landlords to understand the housing rental trend in NYC and locate their desired rooms, either to stay for a few nights or to invest for future profits.
-			</p>
-       	</div>-->
 		<div class="Question-to-investigate">
-        	<h3><b>Question to investigate</b></h3>
+			<br>
+        	<h3 style = "font-weight: bolder">Motivation     </h3>
         	<p class="intro">
-				We would like to provide local hosts and prospective travellers with an interactive and easy to use system that helps them to better understand the rental housing market in New York City <br>This system is deployed on AWS servers and will include sophisticated modules for data pipeline, analytical models, results, visualization, and interactive on-the-fly analysis.
+				The housing rental market in New York City is gradually recovering after a rough time during the pandemic. 
+				The economy in NYC also revives with the reopening of restaurants, the growth of tourism, and the rapid rising of housing rentals. 
+
+				It is crucial for travelers, long-term tenants, and landlords to understand the housing rental trend in NYC and locate their desired offers, either to stay for a few nights or to optimize the pricing strategy for their own properties. 
+
+				In this website, we provide local hosts and prospective travellers with an interactive and easy to use system that helps them to better understand the rental housing market in New York City. <br>This system is deployed on AWS servers and will include sophisticated modules for data pipeline, analytical models, results, visualization, and interactive on-the-fly analysis.
 			</p>
       	</div><div class="User-Story">
         	<h3><b> User Story </b></h3>
         	<p class="intro">
-				As a travel/renter who wants to get the best housing offerings in the NYC Airbnb rental market, I would like to receive more information from multiple perspectives that could help me decide on the offering with the highest value. To be more specific, I expect the system to perform several functions:
+				As a travel/renter who wants to get the best housing offerings in the NYC Airbnb rental market, I would like to receive an overview of the rental market in the region I interested in,  
+				so I can make informed purchase decisions. To be more specific, I expect the system to 
+				provide available offerings filtered by my inputs (locations, price range, etc), and automatically generate analysis and visualizations that are easy to understand. 
 			</p>
-			<p class="userstory_body">
-				1. The system can automatically analyze the Airbnb data based on user input (i.e. expected neighborhood or price range), such that users can make informed decisions based on our analysis.
+			<p class="intro">
+				As a homeowner in NYC who wants to lease my properties on Airbnb, I also want an overview of the rental market in my region so I can decide a competitive pricing strategy for my offering. Moreover, I would like to know the number of 
+				offerings that are similar to my property, and the average price of those offerings. I would like those information to be visualized on a map so it's easier to digest. And if there is no similar offering exist, I would like to have a price recommended for my property based on the market, so it can serve as a baseline 
+				for my pricing strategy. 
 			</p>
-			<p class="userstory_body">
-				2. The system can automatically recommend the best rental prices based on user inputs and learned features of the NYC Airbnb market.
-			</p>
-      	</div>
+		</div>
+
+
     </div><div class = "middle-container">
 		<div class="Question-to-investigate">
 			<h3><b>Analysis of Entire Dataset</b></h3>
@@ -74,6 +76,13 @@
 
 
 
+<div class="row">
+	<div class="col-md-12">
+		<h3>
+			<b>Your Dream House Finder </b><br>
+		</h3>
+	</div>
+</div>
 <div id = "initial_loading">
 	<div class="sk-cube-grid">
 		<div class="sk-cube sk-cube1"></div>
@@ -93,10 +102,29 @@
 		$("#initial_loading").hide();     
 		
 	}
-
 </script>
 	<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
