@@ -3,7 +3,7 @@ import time
 import pickle
 from flask import Flask, request, render_template
 import pandas as pd
-from predict import data_transform, predict, parse_request
+from pred.predict import data_transform, predict, parse_request
 
 from bokeh.tile_providers import get_provider, Vendors
 from bokeh.palettes import Category20c
@@ -58,7 +58,7 @@ def load_model():
     global model
 
     # model variable refers to the global variable
-    with open('model.pkl', 'rb') as f:
+    with open('pred/model.pkl', 'rb') as f:
         model = pickle.load(f)
 
 
@@ -215,14 +215,14 @@ def actual_app():
         ), 1)) + ", Median Price is: $" + str(round(df_selected["price"].median(), 1)) + ", displaying top 20 cheapest offerings: "
         if len(df_selected) == 0:
             encoded_input = data_transform(df, request.form)
-            price_predicted = predict('model.pkl', encoded_input)
+            price_predicted = predict('pred/model.pkl', encoded_input)
             msg_pred = "We have no available record that match the input, but our model recommands a reasonable price based on the market trend"
             msg_pred = msg_pred + " for the given inputs is: " + \
                 "$" + str(price_predicted) + ". "
 
         elif len(df_selected) < 20:
             encoded_input = data_transform(df, request.form)
-            price_predicted = predict('model.pkl', encoded_input)
+            price_predicted = predict('pred/model.pkl', encoded_input)
             msg_pred = "Less than 20 records found based on the inputs, which may not be representative of the market. Based on our model, a resonable price recommended for the given inputs is: "
             msg_pred = msg_pred + "$" + str(price_predicted) + ". "
 
