@@ -1,4 +1,3 @@
-
 from bokeh.plotting import figure, output_file, show
 from bokeh.models import ColumnDataSource
 from bokeh.models.tools import HoverTool
@@ -23,11 +22,8 @@ from bokeh.palettes import RdBu
 def plot_bokeh_smalldf(dataframe): 
     """ 
     Plots the circle map of listings based on users inputs. 
-
     :param dataframe: dataframe filtered by users inputs 
     :type dataframe: pandas DataFrame 
-
-
     :return: rendered bokeh circle map 
     :rtype: bokeh map objects 
     """ 
@@ -85,13 +81,10 @@ def plot_bokeh_smalldf(dataframe):
 def sort_keys(ls, df):
     """ 
     Sorts the dataframe based on input key
-
     :param ls: keys for sorting 
     :type ls: list 
-
     :param df: dataframe to sort
     :type df: pandas DataFrame 
-
     :return: sorted dataframe 
     
     :rtype: pandas DataFrame 
@@ -102,13 +95,10 @@ def sort_keys(ls, df):
 def viz_key_df(ls, df): 
     """ 
     Visualize the listings based on users input using the plot_bokeh_smalldf() 
-
     :param ls: keys for sorting 
     :type ls: list 
-
     :param df: dataframe to visualize 
     :type df: pandas DataFrame 
-
     :return: rendered map 
     :rtype: bokeh map objects 
     """ 
