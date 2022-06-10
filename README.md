@@ -42,15 +42,10 @@ As a homeowner in NYC who wants to lease my properties on Airbnb, I also want an
     ├── docker-compose.yml              # Docker yml for website deployment 
     ├── test_cases.py                   # Test cases for all functions we implemented 
     ├── .gitignore              
-    ├── LICENSE
+    ├── requirements.txt
     └── README.md
 
-## Requirements 
-    numpy
-    scikit-learn~=1.0.1
-    flask
-    pandas
-    bokeh
+
 
 ## Website Links 
 
