@@ -4,20 +4,45 @@ from viz_FilterbyText.pipeline_new_1 import *
 from viz_FilterbyText.pipeline_new import *
 import pytest
 import pandas as pd
+import numpy as np
 
 class TestCases:
     ##### Chang #####
     def test_predict(self):
-        pass
+        '''
+        Test predict(model_path, encoded_input) fucntion in pred/predict.py. The function takes the path
+        of the regressor model and the encoded input data as parameters, and should give a float value as
+        the output.
+        '''
+        request_form = {
+            'roomType': 'Entire home/apt',
+            'neighbourhoodGroup': 'Bronx', 
+            'neighbourhood': 'Claremont Village',
+            'minNight': '1'
+        }
+        model_path = './pred/model.pkl'
+        encoded_input = data_transform(get_pd_df('./data/final_dataframe.csv'), request_form)
+        y_pred = predict(model_path=model_path, encoded_input=encoded_input)
+        assert isinstance(y_pred, np.float64)
 
     def test_get_ng_dict(self):
-        pass
-
-    def test_load_model(self):
-        pass
+        '''
+        Test get_ng_dict(df) function in application.py. The function takes the df with pd.DataFrame type
+        and output an dictionary with the neighbourhood groups as keys, and the contained neighbourhoods 
+        as values.
+        '''
+        df = get_pd_df('./data/final_dataframe.csv')
+        ng_dict = get_ng_dict(df)
+        assert isinstance(ng_dict, dict)
+        assert 'Chinatown' in ng_dict.get('Manhattan')
 
     def test_get_pd_df(self):
-        pass
+        '''
+        Test get_pd_df(path) function in application.py. The function takes the path of the dataset csv
+        as input, and output the loaded pd.DataFrame object.
+        '''
+        df = get_pd_df('./data/final_dataframe.csv')
+        assert isinstance(df, pd.DataFrame)
     ##### Chang #####
 
 

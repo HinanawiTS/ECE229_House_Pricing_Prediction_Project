@@ -5,6 +5,18 @@ from sklearn.preprocessing import OneHotEncoder
 
 
 def parse_request(df, request_form):
+    """
+    Parse the HTTP request to get the input data
+
+    :param df: the entire dataset for feature embedding 
+    :type df: Pandas DataFrame 
+
+    :param request_form: the received HTTP request
+    :type request_form: ~werkzeug.datastructures.ImmutableMultiDict
+
+    :return: the parsed input data
+    :rtype: Pandas Series
+    """ 
     inputed = {}
     inputed['neighbourhood'] = request_form.get("neighbourhood")
     inputed['neighbourhood_group'] = request_form['neighbourhoodGroup']
@@ -21,6 +33,18 @@ def parse_request(df, request_form):
 
 
 def data_transform(df, request_form):
+    """
+    Parse the HTTP request to get the encoded input data
+
+    :param df: the entire dataset for feature embedding 
+    :type df: Pandas DataFrame 
+
+    :param request_form: the received HTTP request
+    :type request_form: ~werkzeug.datastructures.ImmutableMultiDict
+
+    :return: the encoded input data
+    :rtype: Pandas DataFrame
+    """ 
     encoded = df
     encoded = encoded[["price", "neighbourhood_group", "neighbourhood", "room_type", "minimum_nights"]] 
     
@@ -40,6 +64,18 @@ def data_transform(df, request_form):
 
 
 def predict(model_path, encoded_input):
+    """
+    Load the model and give prediction according to the encoded input data
+
+    :param model_path: the path of the saved model
+    :type model_path: string
+
+    :param encoded_input: the encoded input data
+    :type encoded_input: Pandas DataFrame
+
+    :return: the predicted result
+    :rtype: float
+    """ 
     lr2 = pickle.load(open(model_path, 'rb'))
     
     return lr2.predict([encoded_input])[0]
