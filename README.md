@@ -13,34 +13,34 @@ As a homeowner in NYC who wants to lease my properties on Airbnb, I also want an
     .
     
     ├── data  
-        ├── AB_NYC_2019.csv # Original dataset 
-        ├── data_feature.csv # Added feature
-        ├── data_preprocessed.csv # Preprocessed dataset 
-        ├── data_to_show.csv # Data for visualization 
-        ├── final_dataframe.csv # Data for analysis 
+        ├── AB_NYC_2019.csv             # Original dataset 
+        ├── data_feature.csv            # Added feature
+        ├── data_preprocessed.csv       # Preprocessed dataset 
+        ├── data_to_show.csv            # Data for visualization 
+        ├── final_dataframe.csv         # Data for analysis 
     
-    ├── docs # Contains all packages necessary to build the sphinx documentation 
+    ├── docs                            # Contains all packages necessary to build the sphinx documentation 
     
     ├── pred 
-        ├── model.pkl # Trained weights of the Decision Tree Regressor 
-        ├── predict.py # Source for making predictions 
+        ├── model.pkl                   # Trained weights of the Decision Tree Regressor 
+        ├── predict.py                  # Source for making predictions 
     
-    ├── static # Contains all static resources for the website 
+    ├── static                          # Contains all static resources for the website 
     
     ├── template
-        ├── index.html # Static part of the website 
-        ├── actual_app.html # Application website 
+        ├── index.html                  # Static part of the website 
+        ├── actual_app.html             # Application website 
     
-    ├── viz # Contains visualization not included in the application, just for analysis 
+    ├── viz                             # Contains visualization not included in the application, just for analysis 
     
     ├── viz_FilterbyText 
-        ├── pipeline_new.py # Visualization pipeline for hexbin maps and donut chart 
-        ├── pipeline_new_1.py # Visualization pipeline for bokeh map 
+        ├── pipeline_new.py             # Visualization pipeline for hexbin maps and donut chart 
+        ├── pipeline_new_1.py           # Visualization pipeline for bokeh map 
         
-    ├── Application.py # A flask backend, including all necessary backend functions for the website 
-    ├── Dockerfile # Docker file for website deployment 
-    ├── docker-compose.yml # Docker yml for website deployment 
-    ├── test_cases.py # Test cases for all functions we implemented 
+    ├── Application.py                  # A flask backend, including all necessary backend functions for the website 
+    ├── Dockerfile                      # Docker file for website deployment 
+    ├── docker-compose.yml              # Docker yml for website deployment 
+    ├── test_cases.py                   # Test cases for all functions we implemented 
     ├── .gitignore              
     ├── LICENSE
     └── README.md
