@@ -9,4 +9,51 @@ As a travel/renter who wants to get the best housing offerings in the NYC Airbnb
 
 As a homeowner in NYC who wants to lease my properties on Airbnb, I also want an overview of the rental market in my region so I can decide a competitive pricing strategy for my offering. Moreover, I would like to know the number of offerings that are similar to my property, and the average price of those offerings. I would like those information to be visualized on a map so it's easier to digest. And if there is no similar offering exist, I would like to have a price recommended for my property based on the market, so it can serve as a baseline for my pricing strategy.
 
-## Project Structure
+## Repository Structure 
+    .
+    
+    ├── data  
+        ├── AB_NYC_2019.csv # Original dataset 
+        ├── data_feature.csv # Added feature
+        ├── data_preprocessed.csv # Preprocessed dataset 
+        ├── data_to_show.csv # Data for visualization 
+        ├── final_dataframe.csv # Data for analysis 
+    
+    ├── docs # Contains all packages necessary to build the sphinx documentation 
+    
+    
+    
+    
+    ├── pred 
+        ├── model.pkl # Trained weights of the Decision Tree Regressor 
+        ├── predict.py # Source for making predictions 
+    
+    ├── static # Contains all static resources for the website 
+    
+    ├── template
+        ├── index.html # Static part of the website 
+        ├── actual_app.html # Application website 
+    
+    ├── viz # Contains visualization not included in the application, just for analysis 
+    
+    ├── viz_FilterbyText 
+        ├── pipeline_new.py # Visualization pipeline for hexbin maps and donut chart 
+        ├── pipeline_new_1.py # Visualization pipeline for bokeh map 
+        
+    ├── Application.py # A flask backend, including all necessary backend functions for the website 
+    
+    ├── Dockerfile # Docker file for website deployment 
+    ├── docker-compose.yml # Docker yml for website deployment 
+    ├── test_cases.py # Test cases for all functions we implemented 
+    ├── .gitignore              
+    ├── LICENSE
+    └── README.md
+
+## Requirements 
+    numpy
+    scikit-learn~=1.0.1
+    flask
+    pandas
+    bokeh
+
+## Website Links 
