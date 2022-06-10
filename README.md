@@ -7,7 +7,14 @@ This system is deployed on AWS servers and it includes sophisticated modules for
 ## User Story
 As a travel/renter who wants to get the best housing offerings in the NYC Airbnb rental market, I would like to receive an overview of the rental market in the region I interested in, so I can make informed purchase decisions. To be more specific, I expect the system to provide available offerings filtered by my inputs (locations, price range, etc), and automatically generate analysis and visualizations that are easy to understand.
 
-As a homeowner in NYC who wants to lease my properties on Airbnb, I also want an overview of the rental market in my region so I can decide a competitive pricing strategy for my offering. Moreover, I would like to know the number of offerings that are similar to my property, and the average price of those offerings. I would like those information to be visualized on a map so it's easier to digest. And if there is no similar offering exist, I would like to have a price recommended for my property based on the market, so it can serve as a baseline for my pricing strategy.
+As a homeowner in NYC who wants to lease my properties on Airbnb, I also want an overview of the rental market in my region so I can decide a competitive pricing strategy for my offering. Moreover, I would like to know the number of offerings that are similar to my property, and the average price of those offerings. I would like those information to be visualized on a map so it's easier to digest. And if there is no similar offering exist, I would like to have a price recommended for my property based on the market, so it can serve as a baseline for my pricing strategy. 
+
+## Documentation
+Documentation for python functions are hosted at: https://hinanawits.github.io/ECE229-Documentation/
+
+## Link to Website 
+
+## Test Coverage Reports 
 
 ## Repository Structure 
     .
@@ -45,7 +52,4 @@ As a homeowner in NYC who wants to lease my properties on Airbnb, I also want an
     ├── requirements.txt
     └── README.md
 
-
-
-## Website Links 
 
