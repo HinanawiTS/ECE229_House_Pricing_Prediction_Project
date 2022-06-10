@@ -21,9 +21,6 @@ As a homeowner in NYC who wants to lease my properties on Airbnb, I also want an
     
     ├── docs # Contains all packages necessary to build the sphinx documentation 
     
-    
-    
-    
     ├── pred 
         ├── model.pkl # Trained weights of the Decision Tree Regressor 
         ├── predict.py # Source for making predictions 
@@ -41,7 +38,6 @@ As a homeowner in NYC who wants to lease my properties on Airbnb, I also want an
         ├── pipeline_new_1.py # Visualization pipeline for bokeh map 
         
     ├── Application.py # A flask backend, including all necessary backend functions for the website 
-    
     ├── Dockerfile # Docker file for website deployment 
     ├── docker-compose.yml # Docker yml for website deployment 
     ├── test_cases.py # Test cases for all functions we implemented 
@@ -57,3 +53,4 @@ As a homeowner in NYC who wants to lease my properties on Airbnb, I also want an
     bokeh
 
 ## Website Links 
+
