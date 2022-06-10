@@ -22,16 +22,23 @@ df = None                       # global DataFrame object
 application = Flask(__name__)   # Flask application
 
 
+
+
 def select(df_selected, attributes, ranges):
-    """
-    @description: 
-        select data according to the parsed attributes and ranges
-    @param:
-        df_selected: DataFrame to select
-        attributes: list of attributes to select
-        ranges: list of ranges of attributes
-    @return: 
-        df_select: the selected DataFrame
+    """ 
+    Selects data according to the parsed attributes and ranges. 
+   
+    :param df_selected: DataFrame to select from 
+    :type df_selected: Pandas DataFrame 
+
+    :param attributes: list of attributes to select
+    :type attributes: list 
+
+    :param ranges: list of ranges of attributes
+    :type ranges: list 
+    
+    :return: the selected DataFrame
+    :rtype: Pandas DataFrame
     """
     assert isinstance(df_selected, pd.DataFrame)
     assert isinstance(attributes, list)
@@ -49,12 +56,27 @@ def select(df_selected, attributes, ranges):
 
 
 def get_ng_dict(df):
-    """ get the dict of groups and neighbourhoods: {ng: neighbourhood} """
+    """
+    Get the dictionary of neighbourhoods based on the input regions. 
+    
+    :param df: DataFrame to select from. 
+    :type df: Pandas DataFrame 
+    
+    
+    :return:  the dictionary of neighbourhoods in the selected regions. 
+    :rtype: dictionary 
+    """
 
     return df.groupby("neighbourhood_group")["neighbourhood"].unique().to_dict()
 
 
 def load_model():
+    """
+    Loads the Decision Tree Regressor model we trained. 
+    
+    :return: None 
+    :rtype: None 
+    """
     global model
 
     # model variable refers to the global variable
@@ -63,11 +85,28 @@ def load_model():
 
 
 def get_pd_df(path):
+    """
+    Read the CSV files into a Pandas DataFrame. 
+    
+    :param path: path of the csv files. 
+    :type path: str 
+
+    :return: a Pandas DataFrame of the inputed files. 
+    :rtype: Pandas DataFrame 
+    """
     return pd.read_csv(path)
 
 
 def parse_price_range(priceRangeStr):
-    """ parse the str to get price range """
+    """
+    Parse the user inputed strings to get price range
+    
+    :param priceRangeStr: Range of Price 
+    :type priceRangeStr: string 
+
+    :return: list of price range 
+    :rtype: list 
+    """
 
     loStr, hiStr = priceRangeStr.split('-')
     if hiStr == '':
@@ -80,13 +119,17 @@ def parse_price_range(priceRangeStr):
 
 def select_from_request(df_selected, request_form, notfound=False):
     """
-    @description: 
-        select data according to the html request
-    @param: 
-        df_selected: DataFrame to select
-        request_form: the HTML request
-    @return: 
-        df_select: the selected DataFrame
+    Selects data according to the html request.  
+
+    :param df_selected: DataFrame to select
+    :type df_selected: pandas DataFrame 
+
+    :param request_form: the HTML request
+    :type request_form: iterable 
+
+    
+    :return: the selected DataFrame 
+    :rtype: pandas DataFrame 
     """
 
     global df
@@ -137,7 +180,18 @@ def select_from_request(df_selected, request_form, notfound=False):
     return select(df_selected, attributes, ranges)
 
 
+
+
 def plot_bokeh_map_new(df_new):
+    """
+    Plot the map of offerings (points) using the updated visulization and NLP processed dataframe. 
+
+    :param df_new: NLP processed dataframe to plots 
+    :type df_new: Pandas DataFrame 
+
+    :return: an interactive bokeh map of circles of offerings 
+    :rtype: bokeh map ojects 
+    """ 
 
     room_list = ['bedroom', 'bedrooms', 'bed',
                  'beds', 'bdrs', 'bdr', 'room', 'rooms',
@@ -148,7 +202,14 @@ def plot_bokeh_map_new(df_new):
 
 
 @application.route('/actual_app', methods=['POST', 'GET'])
-def actual_app():
+def actual_app(): 
+    """ 
+    The actual application to generate analysis and render the pages. 
+
+
+    :return: rendered webpages 
+    :rtype: rendered html 
+    """ 
 
     #import cProfile, pstats
     #profiler = cProfile.Profile()
@@ -274,11 +335,21 @@ def actual_app():
                            img=img, donut_title=donut_title)
 
 
+
 @application.route('/', methods=['POST', 'GET'])
 def home_endpoint():
+    """ 
+    Route for the flask backend. 
+
+    :return: rendered index.html 
+    :rtype: rendered webpages 
+    """ 
     return render_template('index.html')
 
 
 if __name__ == '__main__':
     load_model()  # load model at the beginning once only
+
     application.run(host='0.0.0.0', port=5000, debug=True, use_reloader=False)
+
+

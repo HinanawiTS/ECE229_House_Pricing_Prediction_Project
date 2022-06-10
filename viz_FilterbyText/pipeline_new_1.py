@@ -16,11 +16,22 @@ from bokeh.resources import CDN
 import pandas as pd
 
 
-# df_new=pd.read_csv('final_dataframe.csv', index_col=0)
+
 
 from bokeh.models import WheelZoomTool
 from bokeh.palettes import RdBu
-def plot_bokeh_smalldf(dataframe):
+def plot_bokeh_smalldf(dataframe): 
+    """ 
+    Plots the circle map of listings based on users inputs. 
+
+    :param dataframe: dataframe filtered by users inputs 
+    :type dataframe: pandas DataFrame 
+
+
+    :return: rendered bokeh circle map 
+    :rtype: bokeh map objects 
+    """ 
+
     if len(dataframe) > 500: 
         fs = dataframe.head(500)
         
@@ -66,15 +77,45 @@ def plot_bokeh_smalldf(dataframe):
     p.toolbar.logo = None
     script1, div1 = components(p)
     cdn_js = CDN.js_files[0]
-    # cdn_css = CDN.css_files[0]
+    
     return script1, div1, cdn_js
 
 
     
 def sort_keys(ls, df):
-    #all_room_df = df[df.title_split.str.contains('|'.join(ls))]
+    """ 
+    Sorts the dataframe based on input key
+
+    :param ls: keys for sorting 
+    :type ls: list 
+
+    :param df: dataframe to sort
+    :type df: pandas DataFrame 
+
+    :return: sorted dataframe 
+    
+    :rtype: pandas DataFrame 
+    """ 
 
     return df
-def viz_key_df(ls, df):
+
+def viz_key_df(ls, df): 
+    """ 
+    Visualize the listings based on users input using the plot_bokeh_smalldf() 
+
+    :param ls: keys for sorting 
+    :type ls: list 
+
+    :param df: dataframe to visualize 
+    :type df: pandas DataFrame 
+
+    :return: rendered map 
+    :rtype: bokeh map objects 
+    """ 
+    
+    
     key_df=sort_keys(ls, df)
+
+    
+    
     return plot_bokeh_smalldf(key_df)
