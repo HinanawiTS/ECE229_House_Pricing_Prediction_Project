@@ -5,6 +5,8 @@ from viz_FilterbyText.pipeline_new import *
 import pytest
 import pandas as pd
 import numpy as np
+from flask import Flask, request, render_template
+from werkzeug.datastructures import MultiDict
 
 class TestCases:
     ##### Chang #####
@@ -94,14 +96,32 @@ class TestCases:
 
     ##### bittan #####
     def test_parse_price_range(self):
-        pass
+        ''' Test cases for parse_price-range function in application.py '''
+        assert type(parse_price_range('20-30'))==list, 'output should be a list'
+        assert parse_price_range('20-30')==[i for i in range(20,30)]
+        assert parse_price_range('''-''')==[i for i in range(0,20000)]
 
     def test_select_from_request(self):
-        pass
+        ''' Test cases for select from request function in application.py'''
+        csv_path='./viz_FilterbyText/final_dataframe.csv'
+        full_df=pd.read_csv(csv_path, index_col=0)
+        request_form=MultiDict([('roomType', 'Entire home/apt'), ('neighbourhoodGroup', 'Brooklyn'), ('neighbourhood', 'Cypress Hills'), ('minPrice', '10'), ('maxPrice', '1000'), ('minNight', '1')])
+        assert type(select_from_request(full_df,request_form
+            ,notfound=False))==pd.DataFrame
 
     def test_sort_keys(self):
-        pass
+        ''' Test cases for sort_keys function in ./viz_FilterbyText/pipeline_new_1.py'''
+        csv_path='./viz_FilterbyText/final_dataframe.csv'
+        full_df=pd.read_csv(csv_path, index_col=0)
+        assert type(sort_keys([],full_df))==pd.DataFrame
+        
 
     def test_viz_key_df(self):
-        pass
+        ''' Test cases for viz_key_df function in ./viz_FilterbyText.pipeline_new_1.py'''
+        csv_path='./viz_FilterbyText/final_dataframe.csv'
+        full_df=pd.read_csv(csv_path, index_col=0)
+        script1, div1, cdn_js=viz_key_df([],full_df)
+        assert isinstance(cdn_js, str)
+        assert isinstance(script1, str)
+        assert isinstance(div1, str)
     ##### bittan #####
