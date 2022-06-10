@@ -42,8 +42,8 @@
 <li><a class="reference internal" href="#package-dependencies">Package Dependencies</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#data-analysis">Data Analysis</a></li>
-<li><a class="reference internal" href="#result-prediction">Result Prediction</a></li>
+<li><a class="reference internal" href="#module-viz_FilterbyText.pipeline_new">Data Visualization</a></li>
+<li><a class="reference internal" href="#module-application">Result Prediction</a></li>
 <li><a class="reference internal" href="#test">Test</a></li>
 </ul>
 </div>
@@ -99,13 +99,213 @@
 </div>
 </section>
 </section>
-<section id="data-analysis">
-<h1>Data Analysis<a class="headerlink" href="#data-analysis" title="Permalink to this heading">¶</a></h1>
-<p>viz/analysis.py</p>
+<section id="module-viz_FilterbyText.pipeline_new">
+<span id="data-visualization"></span><h1>Data Visualization<a class="headerlink" href="#module-viz_FilterbyText.pipeline_new" title="Permalink to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="viz_FilterbyText.pipeline_new.donut">
+<span class="sig-prename descclassname"><span class="pre">viz_FilterbyText.pipeline_new.</span></span><span class="sig-name descname"><span class="pre">donut</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#viz_FilterbyText.pipeline_new.donut" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the donut chart to visualize the percentage of room types in the selected regions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dataset</strong> (<em>pandas DataFrame</em>) – dataset to visualize</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a donut chart visualizing the percentage of room types</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>rendered image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="viz_FilterbyText.pipeline_new.visualize_count">
+<span class="sig-prename descclassname"><span class="pre">viz_FilterbyText.pipeline_new.</span></span><span class="sig-name descname"><span class="pre">visualize_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filtered_dataset</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#viz_FilterbyText.pipeline_new.visualize_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visualize the count of listings based on the user inputs, using hexbin map.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filtered_dataset</strong> (<em>pandas DataFrame</em>) – filtered dataset for mapping</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a rendered bokeh hexbin map based on inputs</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bokeh map objects</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="viz_FilterbyText.pipeline_new.visualize_price">
+<span class="sig-prename descclassname"><span class="pre">viz_FilterbyText.pipeline_new.</span></span><span class="sig-name descname"><span class="pre">visualize_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filtered_dataset</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#viz_FilterbyText.pipeline_new.visualize_price" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visualize the average price of listings based on the user inputs, using hexbin map.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filtered_dataset</strong> (<em>pandas DataFrame</em>) – filtered dataset for mapping</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a rendered bokeh hexbin map based on inputs</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bokeh map objects</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="result-prediction">
-<h1>Result Prediction<a class="headerlink" href="#result-prediction" title="Permalink to this heading">¶</a></h1>
-<p>prediction.py</p>
+<section id="module-application">
+<span id="result-prediction"></span><h1>Result Prediction<a class="headerlink" href="#module-application" title="Permalink to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="application.actual_app">
+<span class="sig-prename descclassname"><span class="pre">application.</span></span><span class="sig-name descname"><span class="pre">actual_app</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#application.actual_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>The actual application to generate analysis and render the pages.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>rendered webpages</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>rendered html</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="application.get_ng_dict">
+<span class="sig-prename descclassname"><span class="pre">application.</span></span><span class="sig-name descname"><span class="pre">get_ng_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#application.get_ng_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the dictionary of neighbourhoods based on the input regions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>df</strong> (<em>Pandas DataFrame</em>) – DataFrame to select from.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the dictionary of neighbourhoods in the selected regions.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="application.get_pd_df">
+<span class="sig-prename descclassname"><span class="pre">application.</span></span><span class="sig-name descname"><span class="pre">get_pd_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#application.get_pd_df" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the CSV files into a Pandas DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – path of the csv files.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a Pandas DataFrame of the inputed files.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Pandas DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="application.home_endpoint">
+<span class="sig-prename descclassname"><span class="pre">application.</span></span><span class="sig-name descname"><span class="pre">home_endpoint</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#application.home_endpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Route for the flask backend.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>rendered index.html</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>rendered webpages</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="application.load_model">
+<span class="sig-prename descclassname"><span class="pre">application.</span></span><span class="sig-name descname"><span class="pre">load_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#application.load_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the Decision Tree Regressor model we trained.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="application.parse_price_range">
+<span class="sig-prename descclassname"><span class="pre">application.</span></span><span class="sig-name descname"><span class="pre">parse_price_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">priceRangeStr</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#application.parse_price_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the user inputed strings to get price range</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>priceRangeStr</strong> (<em>string</em>) – Range of Price</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of price range</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="application.plot_bokeh_map_new">
+<span class="sig-prename descclassname"><span class="pre">application.</span></span><span class="sig-name descname"><span class="pre">plot_bokeh_map_new</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_new</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#application.plot_bokeh_map_new" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the map of offerings (points) using the updated visulization and NLP processed dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>df_new</strong> (<em>Pandas DataFrame</em>) – NLP processed dataframe to plots</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an interactive bokeh map of circles of offerings</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bokeh map ojects</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="application.select">
+<span class="sig-prename descclassname"><span class="pre">application.</span></span><span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_selected</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ranges</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#application.select" title="Permalink to this definition">¶</a></dt>
+<dd><p>Selects data according to the parsed attributes and ranges.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df_selected</strong> (<em>Pandas DataFrame</em>) – DataFrame to select from</p></li>
+<li><p><strong>attributes</strong> (<em>list</em>) – list of attributes to select</p></li>
+<li><p><strong>ranges</strong> (<em>list</em>) – list of ranges of attributes</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the selected DataFrame</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Pandas DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="application.select_from_request">
+<span class="sig-prename descclassname"><span class="pre">application.</span></span><span class="sig-name descname"><span class="pre">select_from_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_selected</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request_form</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notfound</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#application.select_from_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Selects data according to the html request.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df_selected</strong> (<em>pandas DataFrame</em>) – DataFrame to select</p></li>
+<li><p><strong>request_form</strong> (<em>iterable</em>) – the HTML request</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the selected DataFrame</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="test">
 <h1>Test<a class="headerlink" href="#test" title="Permalink to this heading">¶</a></h1>

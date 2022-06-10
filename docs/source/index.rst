@@ -40,13 +40,19 @@ The project depends on flask, numpy, pandas, scikit-learn and bokeh, etc. The pa
    ->pandas                        1.4.2
 
 
-Data Analysis
+Data Visualization
 ==================
-viz/analysis.py
+.. automodule:: viz_FilterbyText.pipeline_new
+    :members:
+
 
 Result Prediction
 ==================
-prediction.py
+
+.. automodule:: application
+    :members:
+
+
 
 Test
 ==================
