@@ -12,7 +12,7 @@ As a homeowner in NYC who wants to lease my properties on Airbnb, I also want an
 ## Link to Website 
 http://ec2-52-27-61-221.us-west-2.compute.amazonaws.com:5000/ 
 
-The explanations for the use of the application are included in the "How to Use" section of the website. 
+The detailed explanations for the use of the application are included in the "How to Use" section of the website. 
 
 ## Documentation
 Documentation for python functions are hosted at: https://hinanawits.github.io/ECE229-Documentation/
