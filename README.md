@@ -13,8 +13,10 @@ As a homeowner in NYC who wants to lease my properties on Airbnb, I also want an
 Documentation for python functions are hosted at: https://hinanawits.github.io/ECE229-Documentation/
 
 ## Link to Website 
+http://ec2-52-27-61-221.us-west-2.compute.amazonaws.com:5000/
 
 ## Test Coverage Reports 
+./pytestReport.html
 
 ## Repository Structure 
     .
@@ -50,6 +52,7 @@ Documentation for python functions are hosted at: https://hinanawits.github.io/E
     ├── test_cases.py                   # Test cases for all functions we implemented 
     ├── .gitignore              
     ├── requirements.txt
+    ├── pytestReport.html
     └── README.md
 
 
