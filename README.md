@@ -59,7 +59,6 @@ Some functions for rendering webpages in application.py were not tested because 
     ├── test_cases.py                   # Test cases for all Python functions we implemented 
     ├── .gitignore              
     ├── requirements.txt
-    ├── pytestReport.html
     └── README.md
 
 
