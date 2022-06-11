@@ -150,9 +150,6 @@ def select_from_request(df_selected, request_form, notfound=False):
     if neighbourhoodList != []:
         attributes.append('neighbourhood')
         ranges.append(neighbourhoodList)
-    if notfound:
-        return select(df, attributes, ranges)
-
     priceRange = '-'
     min_price = request_form.get('minPrice')
     max_price = request_form.get('maxPrice')
@@ -213,7 +210,7 @@ def actual_app():
 
     #import cProfile, pstats
     #profiler = cProfile.Profile()
-    # profiler.enable()
+    #profiler.enable()
     col_to_show = ['name', 'host_name', 'room_type', 'neighbourhood_group',
                    'neighbourhood',
                    'minimum_nights', 'number_of_reviews', "price"]
@@ -232,6 +229,8 @@ def actual_app():
     # select data according to the submitted form
     for i in ng_dict.keys():
         ng_dict[i] = list(sorted(ng_dict[i]))
+    if not request: 
+        return 
     if request.method == 'POST':
         err_message = False
         roomTypeList = request.form.getlist('roomType')

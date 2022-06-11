@@ -108,6 +108,14 @@ class TestCases:
         request_form=MultiDict([('roomType', 'Entire home/apt'), ('neighbourhoodGroup', 'Brooklyn'), ('neighbourhood', 'Cypress Hills'), ('minPrice', '10'), ('maxPrice', '1000'), ('minNight', '1')])
         assert type(select_from_request(full_df,request_form
             ,notfound=False))==pd.DataFrame
+        assert isinstance(select_from_request(full_df, request_form, notfound = True), pd.DataFrame)
+        assert len(select_from_request(full_df, request_form, notfound = False)) >= 0
+        
+        
+        
+        
+        request_form = MultiDict([('roomType', 'Entire home/apt'), ('neighbourhoodGroup', 'Brooklyn'), ('neighbourhood', 'Cypress Hills'), ('maxPrice', '1000'), ("minReview", "0")])
+        assert isinstance(select_from_request(full_df, request_form), pd.DataFrame)
 
     def test_sort_keys(self):
         ''' Test cases for sort_keys function in ./viz_FilterbyText/pipeline_new_1.py'''
@@ -125,3 +133,89 @@ class TestCases:
         assert isinstance(script1, str)
         assert isinstance(div1, str)
     ##### bittan #####
+
+
+    ##### Zhexu ##### 
+    def test_load_model(self): 
+        """ 
+        Test the load_model() in application.py
+
+        """ 
+
+        assert load_model() == None 
+
+    
+    def test_actual_app(self): 
+        """ 
+        Test the actual application renders 
+
+        """ 
+        assert actual_app() == None # Will not return anything if there is no user input 
+
+    def test_visualize_count(self): 
+        """ 
+        Test the hexbin map for visualizing counts. 
+
+        """ 
+
+        csv_path = './viz_FilterbyText/final_dataframe.csv'
+
+        fs = pd.read_csv(csv_path)
+
+        script1, div1, cdn_js, title = visualize_count(fs)
+
+        assert isinstance(script1, str)
+        assert isinstance(div1, str)
+        assert isinstance(cdn_js, str)
+        assert isinstance(title, str)
+
+        rq = MultiDict([('roomType', 'Entire home/apt'), ('neighbourhoodGroup', 'Brooklyn'), ('neighbourhood', 'Cypress Hills')])
+        df_selected = select_from_request(fs, rq)
+        script1, div1, cdn_js, title = visualize_count(df_selected)
+
+
+        assert isinstance(script1, str)
+        assert isinstance(div1, str)
+        assert isinstance(cdn_js, str)
+        assert isinstance(title, str)
+
+    def test_visualize_price(self): 
+        """ 
+        Test the hexbin map for visualizing price. 
+
+        """ 
+
+        csv_path = './viz_FilterbyText/final_dataframe.csv'
+
+        fs = pd.read_csv(csv_path)
+
+        script1, div1, cdn_js, title = visualize_price(fs)
+
+        assert isinstance(script1, str)
+        assert isinstance(div1, str)
+        assert isinstance(cdn_js, str)
+        assert isinstance(title, str)
+
+        rq = MultiDict([('roomType', 'Entire home/apt'), ('neighbourhoodGroup', 'Brooklyn'), ('neighbourhood', 'Cypress Hills')])
+        df_selected = select_from_request(fs, rq)
+        script1, div1, cdn_js, title = visualize_price(df_selected)
+
+
+        assert isinstance(script1, str)
+        assert isinstance(div1, str)
+        assert isinstance(cdn_js, str)
+        assert isinstance(title, str)
+
+    def test_donut(self): 
+        """ 
+        Test the dount() which generates the donut chart. 
+
+        """ 
+
+        csv_path = './viz_FilterbyText/final_dataframe.csv'
+        fs = pd.read_csv(csv_path)
+        img = donut(fs)
+
+        
+        assert isinstance(img, str)
+       
