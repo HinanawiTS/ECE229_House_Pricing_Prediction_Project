@@ -15,8 +15,11 @@ Documentation for python functions are hosted at: https://hinanawits.github.io/E
 ## Link to Website 
 http://ec2-52-27-61-221.us-west-2.compute.amazonaws.com:5000/
 
+
+
 ## Test Coverage Reports 
-./pytestReport.html
+![cs_reports](/coverage_reports.png)
+Some functions for rendering webpages in application.py were not tested because they require flask.request object which is inputed by web requests. 
 
 ## Repository Structure 
     .
