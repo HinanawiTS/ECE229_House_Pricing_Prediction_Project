@@ -9,14 +9,17 @@ As a travel/renter who wants to get the best housing offerings in the NYC Airbnb
 
 As a homeowner in NYC who wants to lease my properties on Airbnb, I also want an overview of the rental market in my region so I can decide a competitive pricing strategy for my offering. Moreover, I would like to know the number of offerings that are similar to my property, and the average price of those offerings. I would like those information to be visualized on a map so it's easier to digest. And if there is no similar offering exist, I would like to have a price recommended for my property based on the market, so it can serve as a baseline for my pricing strategy. 
 
+## Link to Website 
+http://ec2-52-27-61-221.us-west-2.compute.amazonaws.com:5000/ 
+
+The explanations for the use of the application are included in the "How to Use" section of the website. 
+
 ## Documentation
 Documentation for python functions are hosted at: https://hinanawits.github.io/ECE229-Documentation/
 
-## Link to Website 
-http://ec2-52-27-61-221.us-west-2.compute.amazonaws.com:5000/
-
 ## Test Coverage Reports 
-./pytestReport.html
+![cs_reports](/coverage_reports.png)
+Some functions for rendering webpages in application.py were not tested because they require flask.request object which is inputed by web requests. Also, a large portion of the project was implemented in HTML/CSS/Javascrpt, and we only used the results of the EDA and modeling, the process of those parts were not included in our application in order to save computational resources. 
 
 ## Repository Structure 
     .
