@@ -9,7 +9,8 @@ As a travel/renter who wants to get the best housing offerings in the NYC Airbnb
 
 As a homeowner in NYC who wants to lease my properties on Airbnb, I also want an overview of the rental market in my region so I can decide a competitive pricing strategy for my offering. Moreover, I would like to know the number of offerings that are similar to my property, and the average price of those offerings. I would like those information to be visualized on a map so it's easier to digest. And if there is no similar offering exist, I would like to have a price recommended for my property based on the market, so it can serve as a baseline for my pricing strategy. 
 
-## Link to Website 
+## Visit the Website 
+The AWS account hosting the website has been terminated and the AWS server is no longer available. To run the website locally, directly run the application.py at the root directory. 
 http://ec2-52-27-61-221.us-west-2.compute.amazonaws.com:5000/ (No longer available)
 
 The detailed explanations for the use of the application are included in the "How to Use" section of the website. 
