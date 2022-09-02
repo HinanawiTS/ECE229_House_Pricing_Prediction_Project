@@ -12,8 +12,12 @@ As a homeowner in NYC who wants to lease my properties on Airbnb, I also want an
 ## Visit the Website 
 The AWS account hosting the website has been terminated and the AWS server is no longer available. To run the website locally, directly run the application.py at the root directory. 
 
-http://ec2-52-27-61-221.us-west-2.compute.amazonaws.com:5000/ (No longer available)
+Demo: 
 
+https://user-images.githubusercontent.com/35885069/188051202-2ee63c1a-3fbe-4e8d-a8bb-ea417035ec35.mp4
+
+
+http://ec2-52-27-61-221.us-west-2.compute.amazonaws.com:5000/ (No longer available)
 The detailed explanations for the use of the application are included in the "How to Use" section of the website.  
 
 ## Documentation
