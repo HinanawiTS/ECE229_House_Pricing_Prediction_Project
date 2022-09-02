@@ -14,7 +14,7 @@ The AWS account hosting the website has been terminated and the AWS server is no
 
 Demo: 
 
-https://user-images.githubusercontent.com/35885069/188051202-2ee63c1a-3fbe-4e8d-a8bb-ea417035ec35.mp4
+https://user-images.githubusercontent.com/35885069/188051339-1ef9b4bb-459e-4417-9e7f-624c16c0944c.mp4
 
 
 http://ec2-52-27-61-221.us-west-2.compute.amazonaws.com:5000/ (No longer available)
